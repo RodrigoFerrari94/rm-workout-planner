@@ -5,7 +5,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="container">
       <h1>RM Workout Planner</h1>
 
       <p>
