@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [weight, setWeight] = useState("");
   const [level, setLevel] = useState("");
@@ -80,7 +82,9 @@ export default function Login() {
             <option value="advanced">Advanced</option>
           </select>
         </div>
-        <Button type="submit">Get Started</Button>
+        <Button type="submit" onClick={() => navigate("/calculator")}>
+          Get Started
+        </Button>
       </form>
     </div>
   );

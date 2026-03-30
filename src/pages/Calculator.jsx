@@ -8,6 +8,8 @@ export default function Calculator() {
   const [reps, setReps] = useState("");
   const [calculatedExercise, setCalculatedExercise] = useState(null);
 
+  const [history, setHistory] = useState([]);
+
   function handleDataToCalculate(e) {
     e.preventDefault();
     if (!exercise) {
@@ -32,6 +34,24 @@ export default function Calculator() {
       exerciseWeight,
       reps,
       result,
+    });
+
+    const limitHistory = 10;
+    const newHistory = {
+      id: Date.now(),
+      exercise: exercise,
+      weight: exerciseWeight,
+      reps: reps,
+      result: result,
+      date: new Date().toLocaleDateString(),
+    };
+
+    setHistory((prev) => {
+      const updatedHistory = [...prev, newHistory].slice(-limitHistory);
+
+      localStorage.setItem("history", JSON.stringify(updatedHistory));
+
+      return updatedHistory;
     });
 
     setExercise("");
@@ -76,6 +96,18 @@ export default function Calculator() {
           {calculatedExercise.exercise}.
         </p>
       )}
+
+      {history.length > 0 && <h2>Historical</h2>}
+      {history.map((data) => (
+        <div className="container" key={data.id}>
+          <p>Exercise: {data.exercise}</p>
+          <p>Weight: {data.weight}Kg</p>
+          <p>Reps: {data.reps}</p>
+          <p>1 RM: {data.result}Kg</p>
+          <p>Date: {data.date}</p>
+          <p>------------------------------------</p>
+        </div>
+      ))}
     </div>
   );
 }
