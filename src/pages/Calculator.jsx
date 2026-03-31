@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
@@ -58,6 +59,16 @@ export default function Calculator() {
     setExerciseWeight("");
     setReps("");
   }
+
+  useEffect(() => {
+    const savedHistory = localStorage.getItem("history");
+
+    if (savedHistory) {
+      const parsedHistory = JSON.parse(savedHistory);
+
+      setHistory(parsedHistory);
+    }
+  }, []);
 
   return (
     <div className="container">
