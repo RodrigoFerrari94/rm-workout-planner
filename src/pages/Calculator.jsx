@@ -2,23 +2,25 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import HistoryItem from "../components/historyItem";
+import { calculate1RM } from "../utils/calculate1RM";
 
 export default function Calculator() {
   const [exercise, setExercise] = useState("");
-  const [exerciseWeight, setExerciseWeight] = useState("");
+  const [weight, setWeight] = useState("");
   const [reps, setReps] = useState("");
-  const [calculatedExercise, setCalculatedExercise] = useState(null);
+  const [calculation, setCalculation] = useState(null);
 
   const [history, setHistory] = useState([]);
 
-  function handleDataToCalculate(e) {
+  function handleCalculate(e) {
     e.preventDefault();
     if (!exercise) {
       alert("Please enter with exercise name to calculate");
       return;
     }
 
-    if (!exerciseWeight) {
+    if (!weight) {
       alert("Please enter with exercise weight to calculate");
       return;
     }
@@ -28,27 +30,27 @@ export default function Calculator() {
       return;
     }
 
-    const result = Math.round(Number(exerciseWeight) * (1 + Number(reps) / 30));
+    const result = calculate1RM(weight, reps);
 
-    setCalculatedExercise({
+    setCalculation({
       exercise,
-      exerciseWeight,
+      weight,
       reps,
       result,
     });
 
-    const limitHistory = 10;
-    const newHistory = {
+    const HISTORY_LIMIT = 10;
+    const newHistoryItem = {
       id: Date.now(),
       exercise: exercise,
-      weight: exerciseWeight,
+      weight: weight,
       reps: reps,
       result: result,
       date: new Date().toLocaleDateString(),
     };
 
     setHistory((prev) => {
-      const updatedHistory = [...prev, newHistory].slice(-limitHistory);
+      const updatedHistory = [...prev, newHistoryItem].slice(-HISTORY_LIMIT);
 
       localStorage.setItem("history", JSON.stringify(updatedHistory));
 
@@ -56,7 +58,7 @@ export default function Calculator() {
     });
 
     setExercise("");
-    setExerciseWeight("");
+    setWeight("");
     setReps("");
   }
 
@@ -73,7 +75,7 @@ export default function Calculator() {
   return (
     <div className="container">
       <h1>1RM Calculator</h1>
-      <form onSubmit={handleDataToCalculate}>
+      <form onSubmit={handleCalculate}>
         <Input
           label={"Exercise"}
           type={"text"}
@@ -86,8 +88,8 @@ export default function Calculator() {
           label={"Weight"}
           type={"number"}
           placeholder={"Enter the weight used"}
-          value={exerciseWeight}
-          onChange={(e) => setExerciseWeight(e.target.value)}
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
         />
 
         <Input
@@ -101,23 +103,16 @@ export default function Calculator() {
         <Button type={"submit"}>Calculate</Button>
       </form>
 
-      {calculatedExercise && (
+      {calculation && (
         <p>
-          Your 1RM is {calculatedExercise.result} for{" "}
-          {calculatedExercise.exercise}.
+          Your 1RM is {calculation.result} for{" "}
+          {calculation.exercise}.
         </p>
       )}
 
       {history.length > 0 && <h2>Historical</h2>}
-      {history.map((data) => (
-        <div className="container" key={data.id}>
-          <p>Exercise: {data.exercise}</p>
-          <p>Weight: {data.weight}Kg</p>
-          <p>Reps: {data.reps}</p>
-          <p>1 RM: {data.result}Kg</p>
-          <p>Date: {data.date}</p>
-          <p>------------------------------------</p>
-        </div>
+      {history.map((item) => (
+        <HistoryItem key={item.id} item={item} />
       ))}
     </div>
   );
