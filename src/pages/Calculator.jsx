@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import HistoryItem from "../components/historyItem";
+import HistoryItem from "../components/HistoryItem";
 import { calculate1RM } from "../utils/calculate1RM";
 
 export default function Calculator() {
