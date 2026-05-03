@@ -4,9 +4,10 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import HistoryItem from "../components/HistoryItem";
 import { calculate1RM } from "../utils/calculate1RM";
+import { exercises } from "../data/exercises.js";
 
 export default function Calculator() {
-  const [exercise, setExercise] = useState("");
+  const [exerciseId, setExerciseId] = useState("");
   const [weight, setWeight] = useState("");
   const [reps, setReps] = useState("");
   const [calculation, setCalculation] = useState(null);
@@ -15,8 +16,8 @@ export default function Calculator() {
 
   function handleCalculate(e) {
     e.preventDefault();
-    if (!exercise) {
-      alert("Please enter with exercise name to calculate");
+    if (!exerciseId) {
+      alert("Please select an exercise to calculate");
       return;
     }
 
@@ -29,23 +30,34 @@ export default function Calculator() {
       alert("Please enter with number of reps to calculate");
       return;
     }
+    const selectedExercise = exercises.find(
+      (exercise) => exercise.id === exerciseId,
+    );
 
-    const result = calculate1RM(weight, reps);
+    if (!selectedExercise) {
+      alert("Selected exercise was not found");
+      return;
+    }
+
+    const estimated1RM = calculate1RM(weight, reps);
 
     setCalculation({
-      exercise,
+      exerciseName: selectedExercise.name,
+      muscleGroup: selectedExercise.muscleGroup,
       weight,
       reps,
-      result,
+      estimated1RM,
     });
 
     const HISTORY_LIMIT = 10;
     const newHistoryItem = {
       id: Date.now(),
-      exercise: exercise,
+      exerciseId: selectedExercise.id,
+      exerciseName: selectedExercise.name,
+      muscleGroup: selectedExercise.muscleGroup,
       weight: weight,
       reps: reps,
-      result: result,
+      estimated1RM: estimated1RM,
       date: new Date().toLocaleDateString(),
     };
 
@@ -57,7 +69,7 @@ export default function Calculator() {
       return updatedHistory;
     });
 
-    setExercise("");
+    setExerciseId("");
     setWeight("");
     setReps("");
   }
@@ -76,13 +88,22 @@ export default function Calculator() {
     <div className="container">
       <h1>1RM Calculator</h1>
       <form onSubmit={handleCalculate}>
-        <Input
-          label={"Exercise"}
-          type={"text"}
-          placeholder={"Enter the exercise name"}
-          value={exercise}
-          onChange={(e) => setExercise(e.target.value)}
-        />
+        <label>Exercise</label>
+
+        <select
+          value={exerciseId}
+          onChange={(e) => setExerciseId(e.target.value)}
+        >
+          <option value="" disabled>
+            Select an exercise
+          </option>
+
+          {exercises.map((exercise) => (
+            <option key={exercise.id} value={exercise.id}>
+              {exercise.name}
+            </option>
+          ))}
+        </select>
 
         <Input
           label={"Weight"}
@@ -105,8 +126,7 @@ export default function Calculator() {
 
       {calculation && (
         <p>
-          Your 1RM is {calculation.result} for{" "}
-          {calculation.exercise}.
+          Your 1RM is {calculation.estimated1RM} for {calculation.exerciseName}.
         </p>
       )}
 
