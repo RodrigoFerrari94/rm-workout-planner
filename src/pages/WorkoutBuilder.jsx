@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { ExerciseCard } from "../components/ExerciseCard";
+import { trainingGoals } from "../data/trainingGoals";
 
 export default function WorkoutBuilder() {
   const [goal, setGoal] = useState("");
   const [exercisesList, setExercisesList] = useState([]);
+  const [currentWorkout, setCurrentWorkout] = useState([]);
 
   useEffect(() => {
     const savedHistory = localStorage.getItem("history");
@@ -30,6 +32,31 @@ export default function WorkoutBuilder() {
     }
   }, []);
 
+  const selectedGoalRules = trainingGoals[goal];
+
+  function handleAddExerciseToWorkout(exercise) {
+    if (!goal) {
+      return alert("Please select a training goal first");
+    }
+    const workoutExercise = {
+      exerciseId: exercise.exerciseId,
+      exerciseName: exercise.exerciseName,
+      muscleGroup: exercise.muscleGroup,
+      estimated1RM: exercise.estimated1RM,
+      sets: selectedGoalRules.sets,
+      reps: selectedGoalRules.reps,
+      rest: selectedGoalRules.rest,
+    };
+
+    setCurrentWorkout((prevWorkout) => [...prevWorkout, workoutExercise]);
+  }
+
+  function handleRemoveExerciseFromWorkout(indexToRemove) {
+    setCurrentWorkout((prevWorkout) =>
+      prevWorkout.filter((exercise, index) => index !== indexToRemove),
+    );
+  }
+
   return (
     <div className="container">
       <h1>Workout Builder</h1>
@@ -42,11 +69,33 @@ export default function WorkoutBuilder() {
         <option value="hypertrophy">Hypertrophy</option>
         <option value="endurance">Endurance</option>
       </select>
+
       <div className="container">
         <h2>Calculated Exercises</h2>
         {exercisesList.map((exercise) => (
-          <ExerciseCard key={exercise.exerciseId} exercise={exercise} />
+          <ExerciseCard
+            key={exercise.exerciseId}
+            exercise={exercise}
+            onAddExercise={handleAddExerciseToWorkout}
+          />
         ))}
+      </div>
+
+      <div className="container">
+        <h2>Current Workout</h2>
+        {currentWorkout &&
+          currentWorkout.map((selectedExercise, index) => (
+            <div className="container" key={index}>
+              <h3>{selectedExercise.exerciseName}</h3>
+              <h4>{selectedExercise.muscleGroup}</h4>
+              <p>Sets: {selectedExercise.sets}</p>
+              <p>Reps: {selectedExercise.reps}</p>
+              <p>Rest: {selectedExercise.rest}</p>
+              <button onClick={() => handleRemoveExerciseFromWorkout(index)}>
+                Delete
+              </button>
+            </div>
+          ))}
       </div>
     </div>
   );
