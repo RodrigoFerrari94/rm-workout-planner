@@ -6,6 +6,9 @@ export default function WorkoutBuilder() {
   const [goal, setGoal] = useState("");
   const [exercisesList, setExercisesList] = useState([]);
   const [currentWorkout, setCurrentWorkout] = useState([]);
+  const [isWorkoutLoaded, setIsWorkoutLoaded] = useState(false);
+
+  const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
 
   useEffect(() => {
     const savedHistory = localStorage.getItem("history");
@@ -31,6 +34,26 @@ export default function WorkoutBuilder() {
       setExercisesList(latestExercises);
     }
   }, []);
+
+  useEffect(() => {
+    const savedWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY);
+
+    if (savedWorkout) {
+      const parsedWorkout = JSON.parse(savedWorkout);
+      setCurrentWorkout(parsedWorkout);
+    }
+
+    setIsWorkoutLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isWorkoutLoaded) return;
+
+    localStorage.setItem(
+      CURRENT_WORKOUT_STORAGE_KEY,
+      JSON.stringify(currentWorkout),
+    );
+  }, [currentWorkout, isWorkoutLoaded]);
 
   const selectedGoalRules = trainingGoals[goal];
 
