@@ -38,14 +38,32 @@ export default function WorkoutBuilder() {
     if (!goal) {
       return alert("Please select a training goal first");
     }
+
+    const alreadyAdded = currentWorkout.some(
+      (workoutExercise) =>
+        workoutExercise.exerciseId === exercise.exerciseId &&
+        workoutExercise.goal === goal,
+    );
+
+    if (alreadyAdded) {
+      return alert("This exercise is already added with this training goal.");
+    }
+
     const workoutExercise = {
       exerciseId: exercise.exerciseId,
       exerciseName: exercise.exerciseName,
       muscleGroup: exercise.muscleGroup,
       estimated1RM: exercise.estimated1RM,
+      maxLoad: Math.round(
+        exercise.estimated1RM * selectedGoalRules.maxPercentage,
+      ),
+      minLoad: Math.round(
+        exercise.estimated1RM * selectedGoalRules.minPercentage,
+      ),
       sets: selectedGoalRules.sets,
       reps: selectedGoalRules.reps,
       rest: selectedGoalRules.rest,
+      goal: goal,
     };
 
     setCurrentWorkout((prevWorkout) => [...prevWorkout, workoutExercise]);
@@ -91,6 +109,10 @@ export default function WorkoutBuilder() {
               <p>Sets: {selectedExercise.sets}</p>
               <p>Reps: {selectedExercise.reps}</p>
               <p>Rest: {selectedExercise.rest}</p>
+              <p>
+                Load range: {selectedExercise.loadMin} kg -{" "}
+                {selectedExercise.loadMax} kg
+              </p>
               <button onClick={() => handleRemoveExerciseFromWorkout(index)}>
                 Delete
               </button>
