@@ -38,6 +38,8 @@ export default function Login() {
     setName("");
     setWeight("");
     setLevel("");
+
+    navigate("/calculator");
   }
 
   useEffect(() => {
@@ -82,9 +84,7 @@ export default function Login() {
             <option value="advanced">Advanced</option>
           </select>
         </div>
-        <Button type="submit" onClick={() => navigate("/calculator")}>
-          Get Started
-        </Button>
+        <Button type="submit">Get Started</Button>
       </form>
     </div>
   );
