@@ -110,8 +110,8 @@ export default function WorkoutBuilder() {
               <p>Reps: {selectedExercise.reps}</p>
               <p>Rest: {selectedExercise.rest}</p>
               <p>
-                Load range: {selectedExercise.loadMin} kg -{" "}
-                {selectedExercise.loadMax} kg
+                Load range: {selectedExercise.minLoad} kg -{" "}
+                {selectedExercise.maxLoad} kg
               </p>
               <button onClick={() => handleRemoveExerciseFromWorkout(index)}>
                 Delete
