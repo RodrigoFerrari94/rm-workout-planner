@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ExerciseCard } from "../components/ExerciseCard";
 import { trainingGoals } from "../data/trainingGoals";
 
@@ -9,6 +10,8 @@ export default function WorkoutBuilder() {
   const [isWorkoutLoaded, setIsWorkoutLoaded] = useState(false);
 
   const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedHistory = localStorage.getItem("history");
@@ -123,24 +126,28 @@ export default function WorkoutBuilder() {
       </div>
 
       <div className="container">
+        {currentWorkout.length > 0 && (
+          <button onClick={() => navigate("/workout-session")}>
+            Start Workout
+          </button>
+        )}
         <h2>Current Workout</h2>
-        {currentWorkout &&
-          currentWorkout.map((selectedExercise, index) => (
-            <div className="container" key={index}>
-              <h3>{selectedExercise.exerciseName}</h3>
-              <h4>{selectedExercise.muscleGroup}</h4>
-              <p>Sets: {selectedExercise.sets}</p>
-              <p>Reps: {selectedExercise.reps}</p>
-              <p>Rest: {selectedExercise.rest}</p>
-              <p>
-                Load range: {selectedExercise.minLoad} kg -{" "}
-                {selectedExercise.maxLoad} kg
-              </p>
-              <button onClick={() => handleRemoveExerciseFromWorkout(index)}>
-                Delete
-              </button>
-            </div>
-          ))}
+        {currentWorkout.map((selectedExercise, index) => (
+          <div className="container" key={index}>
+            <h3>{selectedExercise.exerciseName}</h3>
+            <h4>{selectedExercise.muscleGroup}</h4>
+            <p>Sets: {selectedExercise.sets}</p>
+            <p>Reps: {selectedExercise.reps}</p>
+            <p>Rest: {selectedExercise.rest}</p>
+            <p>
+              Load range: {selectedExercise.minLoad} kg -{" "}
+              {selectedExercise.maxLoad} kg
+            </p>
+            <button onClick={() => handleRemoveExerciseFromWorkout(index)}>
+              Delete
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

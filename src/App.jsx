@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Calculator from "./pages/Calculator";
 import WorkoutBuilder from "./pages/WorkoutBuilder";
+import WorkoutSession from "./pages/WorkoutSession";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/calculator" element={<Calculator />} />
-        <Route path="/workoutBuilder" element={<WorkoutBuilder />} />
+        <Route path="/workout-builder" element={<WorkoutBuilder />} />
+        <Route path="/workout-session" element={<WorkoutSession />} />
       </Routes>
     </Router>
   );
