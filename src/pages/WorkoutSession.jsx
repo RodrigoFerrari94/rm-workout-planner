@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Timer from "../components/Timer";
 
 export default function WorkoutSession() {
   const [currentWorkout, setCurrentWorkout] = useState([]);
@@ -28,7 +29,8 @@ export default function WorkoutSession() {
           </p>
           <p>Sets: {exercise.sets}</p>
           <p>Reps: {exercise.reps}</p>
-          <p>Rest: {exercise.rest}</p>
+          <p>Rest: {exercise.rest}s</p>
+          <Timer initialSeconds={exercise.rest} />
         </div>
       ))}
       <button onClick={() => navigate("/workout-builder")}>
