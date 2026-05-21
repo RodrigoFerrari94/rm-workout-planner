@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ExerciseCard } from "../components/ExerciseCard";
 import { trainingGoals } from "../data/trainingGoals";
 import Button from "../components/Button";
+import NavigationButton from "../components/NavigationButton";
 
 export default function WorkoutBuilder() {
   const [goal, setGoal] = useState("");
@@ -12,7 +12,6 @@ export default function WorkoutBuilder() {
 
   const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     const savedHistory = localStorage.getItem("history");
@@ -129,9 +128,9 @@ export default function WorkoutBuilder() {
 
       <div className="container">
         {currentWorkout.length > 0 && (
-          <Button onClick={() => navigate("/workout-session")}>
+          <NavigationButton to="/workout-session">
             Start Workout
-          </Button>
+          </NavigationButton>
         )}
         <h2>Current Workout</h2>
         {currentWorkout.map((selectedExercise, index) => (
