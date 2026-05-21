@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TimerToRest from "../components/TimerToRest";
+import Button from "../components/Button";
 
 export default function WorkoutSession() {
   const [sessionExercises, setSessionExercises] = useState([]);
@@ -110,19 +111,19 @@ export default function WorkoutSession() {
           <p>Completed Sets: {exercise.completedSets}</p>
           <p>Status: {exercise.isFinished ? "Finished" : "In Progress"}</p>
           {!exercise.isFinished ? (
-            <button onClick={() => handleFinishExercise(index)}>
+            <Button onClick={() => handleFinishExercise(index)}>
               Finish Exercise
-            </button>
+            </Button>
           ) : (
-            <button onClick={() => handleRestartExercise(index)}>
+            <Button onClick={() => handleRestartExercise(index)}>
               Restart Exercise
-            </button>
+            </Button>
           )}
         </div>
       ))}
-      <button onClick={() => navigate("/workout-builder")}>
+      <Button onClick={() => navigate("/workout-builder")}>
         Back to Workout Builder
-      </button>
+      </Button>
     </div>
   );
 }

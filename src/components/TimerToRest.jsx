@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Button from "./Button";
 
 export default function TimerToRest({
   initialSeconds,
@@ -30,27 +31,27 @@ export default function TimerToRest({
 
       {!isRunning && (
         <div>
-          <button
+          <Button
             onClick={() => {
               onCompleteSet();
               setIsRunning(true);
             }}
           >
             Complete Set
-          </button>
+          </Button>
           <p>LET'S GO!!!</p>
         </div>
       )}
       {isRunning && (
         <div>
-          <button
+          <Button
             onClick={() => {
               setIsRunning(false);
               setRestTimer(initialSeconds);
             }}
           >
             Skip Rest
-          </button>
+          </Button>
           <p>Resting...</p>
         </div>
       )}

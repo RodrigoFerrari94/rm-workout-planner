@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ExerciseCard } from "../components/ExerciseCard";
 import { trainingGoals } from "../data/trainingGoals";
+import Button from "../components/Button";
 
 export default function WorkoutBuilder() {
   const [goal, setGoal] = useState("");
@@ -127,9 +128,9 @@ export default function WorkoutBuilder() {
 
       <div className="container">
         {currentWorkout.length > 0 && (
-          <button onClick={() => navigate("/workout-session")}>
+          <Button onClick={() => navigate("/workout-session")}>
             Start Workout
-          </button>
+          </Button>
         )}
         <h2>Current Workout</h2>
         {currentWorkout.map((selectedExercise, index) => (
@@ -143,9 +144,9 @@ export default function WorkoutBuilder() {
               Load range: {selectedExercise.minLoad} kg -{" "}
               {selectedExercise.maxLoad} kg
             </p>
-            <button onClick={() => handleRemoveExerciseFromWorkout(index)}>
+            <Button onClick={() => handleRemoveExerciseFromWorkout(index)}>
               Delete
-            </button>
+            </Button>
           </div>
         ))}
       </div>
