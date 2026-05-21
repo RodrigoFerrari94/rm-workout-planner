@@ -90,6 +90,7 @@ export default function WorkoutBuilder() {
       sets: selectedGoalRules.sets,
       reps: selectedGoalRules.reps,
       rest: selectedGoalRules.rest,
+      restTimerSeconds: selectedGoalRules.restTimerSeconds,
       goal: goal,
     };
 
@@ -139,7 +140,7 @@ export default function WorkoutBuilder() {
             <h4>{selectedExercise.muscleGroup}</h4>
             <p>Sets: {selectedExercise.sets}</p>
             <p>Reps: {selectedExercise.reps}</p>
-            <p>Rest: {selectedExercise.rest}s</p>
+            <p>Rest: {selectedExercise.rest}</p>
             <p>
               Load range: {selectedExercise.minLoad} kg -{" "}
               {selectedExercise.maxLoad} kg

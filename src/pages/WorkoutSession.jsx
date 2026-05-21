@@ -101,10 +101,10 @@ export default function WorkoutSession() {
           </p>
           <p>Suggested Sets: {exercise.sets}</p>
           <p>Reps: {exercise.reps}</p>
-          <p>Rest: {exercise.rest}s</p>
+          <p>Rest: {exercise.rest}</p>
           {!exercise.isFinished && (
             <TimerToRest
-              initialSeconds={exercise.rest}
+              initialSeconds={exercise.restTimerSeconds}
               onCompleteSet={() => handleCompleteSet(index)}
             />
           )}
