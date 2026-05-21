@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import NavigationButton from "../components/NavigationButton";
 import Button from "../components/Button";
 
 export default function Home() {
-  const navigate = useNavigate();
-
   return (
     <div className="container">
       <h1>RM Workout Planner</h1>
@@ -13,7 +11,7 @@ export default function Home() {
         based on your training goals.
       </p>
 
-      <Button onClick={() => navigate("/login")}>Get Started</Button>
+      <NavigationButton to={"/login"}>Get Started</NavigationButton>
     </div>
   );
 }

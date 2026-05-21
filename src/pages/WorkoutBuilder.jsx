@@ -12,7 +12,6 @@ export default function WorkoutBuilder() {
 
   const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
 
-
   useEffect(() => {
     const savedHistory = localStorage.getItem("history");
 
@@ -105,51 +104,66 @@ export default function WorkoutBuilder() {
   return (
     <div className="container">
       <h1>Workout Builder</h1>
-      <label>Select a training goal</label>
-      <select value={goal} onChange={(e) => setGoal(e.target.value)}>
-        <option value="" disabled>
-          Select a goal
-        </option>
-        <option value="strength">Strength</option>
-        <option value="hypertrophy">Hypertrophy</option>
-        <option value="endurance">Endurance</option>
-      </select>
 
-      <div className="container">
-        <h2>Calculated Exercises</h2>
-        {exercisesList.map((exercise) => (
-          <ExerciseCard
-            key={exercise.exerciseId}
-            exercise={exercise}
-            onAddExercise={handleAddExerciseToWorkout}
-          />
-        ))}
-      </div>
+      {exercisesList.length === 0 ? (
+        <div className="container">
+          <p> No calculated exercises found.</p>
+          <p>Calculate your 1RM first to build a workout.</p>
+          <NavigationButton to={"/calculator"}>Calculate 1RM</NavigationButton>
+        </div>
+      ) : (
+        <div>
+          <label>Select a training goal</label>
+          <select value={goal} onChange={(e) => setGoal(e.target.value)}>
+            <option value="" disabled>
+              Select a goal
+            </option>
+            <option value="strength">Strength</option>
+            <option value="hypertrophy">Hypertrophy</option>
+            <option value="endurance">Endurance</option>
+          </select>
 
-      <div className="container">
-        {currentWorkout.length > 0 && (
-          <NavigationButton to="/workout-session">
-            Start Workout
+          <NavigationButton to={"/calculator"}>
+            Back to Calculator
           </NavigationButton>
-        )}
-        <h2>Current Workout</h2>
-        {currentWorkout.map((selectedExercise, index) => (
-          <div className="container" key={index}>
-            <h3>{selectedExercise.exerciseName}</h3>
-            <h4>{selectedExercise.muscleGroup}</h4>
-            <p>Sets: {selectedExercise.sets}</p>
-            <p>Reps: {selectedExercise.reps}</p>
-            <p>Rest: {selectedExercise.rest}</p>
-            <p>
-              Load range: {selectedExercise.minLoad} kg -{" "}
-              {selectedExercise.maxLoad} kg
-            </p>
-            <Button onClick={() => handleRemoveExerciseFromWorkout(index)}>
-              Delete
-            </Button>
+
+          <div className="container">
+            <h2>Calculated Exercises</h2>
+            {exercisesList.map((exercise) => (
+              <ExerciseCard
+                key={exercise.exerciseId}
+                exercise={exercise}
+                onAddExercise={handleAddExerciseToWorkout}
+              />
+            ))}
           </div>
-        ))}
-      </div>
+
+          <div className="container">
+            {currentWorkout.length > 0 && (
+              <NavigationButton to="/workout-session">
+                Start Workout
+              </NavigationButton>
+            )}
+            <h2>Current Workout</h2>
+            {currentWorkout.map((selectedExercise, index) => (
+              <div className="container" key={index}>
+                <h3>{selectedExercise.exerciseName}</h3>
+                <h4>{selectedExercise.muscleGroup}</h4>
+                <p>Sets: {selectedExercise.sets}</p>
+                <p>Reps: {selectedExercise.reps}</p>
+                <p>Rest: {selectedExercise.rest}</p>
+                <p>
+                  Load range: {selectedExercise.minLoad} kg -{" "}
+                  {selectedExercise.maxLoad} kg
+                </p>
+                <Button onClick={() => handleRemoveExerciseFromWorkout(index)}>
+                  Delete
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

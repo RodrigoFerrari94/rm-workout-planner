@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import TimerToRest from "../components/TimerToRest";
 import Button from "../components/Button";
+import NavigationButton from "../components/NavigationButton";
 
 export default function WorkoutSession() {
   const [sessionExercises, setSessionExercises] = useState([]);
 
   const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const savedWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY);
@@ -93,37 +91,49 @@ export default function WorkoutSession() {
   return (
     <div className="container">
       <h1>Workout Session</h1>
-      {sessionExercises.map((exercise, index) => (
-        <div className="container" key={index}>
-          <h3>{exercise.exerciseName}</h3>
-          <p>
-            Load range: {exercise.minLoad} kg - {exercise.maxLoad} kg
-          </p>
-          <p>Suggested Sets: {exercise.sets}</p>
-          <p>Reps: {exercise.reps}</p>
-          <p>Rest: {exercise.rest}</p>
-          {!exercise.isFinished && (
-            <TimerToRest
-              initialSeconds={exercise.restTimerSeconds}
-              onCompleteSet={() => handleCompleteSet(index)}
-            />
-          )}
-          <p>Completed Sets: {exercise.completedSets}</p>
-          <p>Status: {exercise.isFinished ? "Finished" : "In Progress"}</p>
-          {!exercise.isFinished ? (
-            <Button onClick={() => handleFinishExercise(index)}>
-              Finish Exercise
-            </Button>
-          ) : (
-            <Button onClick={() => handleRestartExercise(index)}>
-              Restart Exercise
-            </Button>
-          )}
+      {sessionExercises.length === 0 ? (
+        <div className="container">
+          <p> No workout found.</p>
+          <p>Build a workout first before starting a session.</p>
+          <NavigationButton to="/workout-builder">
+            Back to Workout Builder
+          </NavigationButton>
         </div>
-      ))}
-      <Button onClick={() => navigate("/workout-builder")}>
-        Back to Workout Builder
-      </Button>
+      ) : (
+        <div className="container">
+          {sessionExercises.map((exercise, index) => (
+            <div className="container" key={index}>
+              <h3>{exercise.exerciseName}</h3>
+              <p>
+                Load range: {exercise.minLoad} kg - {exercise.maxLoad} kg
+              </p>
+              <p>Suggested Sets: {exercise.sets}</p>
+              <p>Reps: {exercise.reps}</p>
+              <p>Rest: {exercise.rest}</p>
+              {!exercise.isFinished && (
+                <TimerToRest
+                  initialSeconds={exercise.restTimerSeconds}
+                  onCompleteSet={() => handleCompleteSet(index)}
+                />
+              )}
+              <p>Completed Sets: {exercise.completedSets}</p>
+              <p>Status: {exercise.isFinished ? "Finished" : "In Progress"}</p>
+              {!exercise.isFinished ? (
+                <Button onClick={() => handleFinishExercise(index)}>
+                  Finish Exercise
+                </Button>
+              ) : (
+                <Button onClick={() => handleRestartExercise(index)}>
+                  Restart Exercise
+                </Button>
+              )}
+            </div>
+          ))}
+          <NavigationButton to="/workout-builder">
+            Back to Workout Builder
+          </NavigationButton>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
+
 import Input from "../components/Input";
 import Button from "../components/Button";
+import NavigationButton from "../components/NavigationButton.jsx";
 import HistoryItem from "../components/HistoryItem";
 import { calculate1RM } from "../utils/calculate1RM";
 import { exercises } from "../data/exercises.js";
@@ -74,6 +76,17 @@ export default function Calculator() {
     setReps("");
   }
 
+  function handleClearHistory() {
+    const confirmedClear = confirm("This will clear your calculation history and current workout. Continue?");
+
+    if (confirmedClear) {
+      setHistory([]);
+      setCalculation(null);
+      localStorage.removeItem("history");
+      localStorage.removeItem("currentWorkout");
+    }
+  }
+
   useEffect(() => {
     const savedHistory = localStorage.getItem("history");
 
@@ -126,11 +139,23 @@ export default function Calculator() {
 
       {calculation && (
         <p>
-          Your 1RM is {calculation.estimated1RM} for {calculation.exerciseName}.
+          Your 1RM is {calculation.estimated1RM}Kg for{" "}
+          {calculation.exerciseName}.
         </p>
       )}
+      {history.length > 0 && (
+        <NavigationButton to={"/workout-builder"}>
+          Go to Workout Builder
+        </NavigationButton>
+      )}
 
-      {history.length > 0 && <h2>Historical</h2>}
+      {history.length > 0 && (
+        <div>
+          <h2>Historical</h2>
+          <Button onClick={handleClearHistory}>Clear History</Button>
+        </div>
+      )}
+
       {history.map((item) => (
         <HistoryItem key={item.id} item={item} />
       ))}

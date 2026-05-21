@@ -5,7 +5,6 @@ export default function Navbar() {
     <nav>
       <Link to="/">Home</Link> |<Link to="/login">Login</Link> |
       <Link to="/calculator">Calculator</Link> |
-      <Link to="/workout-builder">Workout Builder</Link>
     </nav>
   );
 }
