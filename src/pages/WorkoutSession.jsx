@@ -5,8 +5,14 @@ import NavigationButton from "../components/NavigationButton";
 
 export default function WorkoutSession() {
   const [sessionExercises, setSessionExercises] = useState([]);
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+
+  const currentExercise = sessionExercises[currentExerciseIndex];
 
   const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
+
+  const lastExerciseIndex = sessionExercises.length - 1;
+  const totalExercises = sessionExercises.length;
 
   useEffect(() => {
     const savedWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY);
@@ -53,6 +59,15 @@ export default function WorkoutSession() {
         return updatedExercise;
       });
 
+      const exerciseInProgressIndex = updatedExercises.findIndex(
+        (exercise) => exercise.isFinished === false,
+      );
+      if (exerciseInProgressIndex === -1) {
+        setCurrentExerciseIndex(updatedExercises.length - 1);
+      } else {
+        setCurrentExerciseIndex(exerciseInProgressIndex);
+      }
+
       return updatedExercises;
     });
   }
@@ -88,6 +103,18 @@ export default function WorkoutSession() {
     });
   }
 
+  function handleNextExercise() {
+    if (currentExerciseIndex < lastExerciseIndex) {
+      setCurrentExerciseIndex(currentExerciseIndex + 1);
+    }
+  }
+
+  function handlePreviousExercise() {
+    if (currentExerciseIndex > 0) {
+      setCurrentExerciseIndex(currentExerciseIndex - 1);
+    }
+  }
+
   return (
     <div className="container">
       <h1>Workout Session</h1>
@@ -101,34 +128,45 @@ export default function WorkoutSession() {
         </div>
       ) : (
         <div className="container">
-          {sessionExercises.map((exercise, index) => (
-            <div className="container" key={index}>
-              <h3>{exercise.exerciseName}</h3>
-              <p>
-                Load range: {exercise.minLoad} kg - {exercise.maxLoad} kg
-              </p>
-              <p>Suggested Sets: {exercise.sets}</p>
-              <p>Reps: {exercise.reps}</p>
-              <p>Rest: {exercise.rest}</p>
-              {!exercise.isFinished && (
-                <TimerToRest
-                  initialSeconds={exercise.restTimerSeconds}
-                  onCompleteSet={() => handleCompleteSet(index)}
-                />
-              )}
-              <p>Completed Sets: {exercise.completedSets}</p>
-              <p>Status: {exercise.isFinished ? "Finished" : "In Progress"}</p>
-              {!exercise.isFinished ? (
-                <Button onClick={() => handleFinishExercise(index)}>
-                  Finish Exercise
-                </Button>
-              ) : (
-                <Button onClick={() => handleRestartExercise(index)}>
-                  Restart Exercise
-                </Button>
-              )}
-            </div>
-          ))}
+          <p>
+            Exercise {currentExerciseIndex + 1} of {totalExercises}
+          </p>
+          <h3>{currentExercise.exerciseName}</h3>
+          <p>
+            Load range: {currentExercise.minLoad} kg - {currentExercise.maxLoad}{" "}
+            kg
+          </p>
+          <p>Suggested Sets: {currentExercise.sets}</p>
+          <p>Reps: {currentExercise.reps}</p>
+          <p>Rest: {currentExercise.rest}</p>
+          {!currentExercise.isFinished && (
+            <TimerToRest
+              initialSeconds={currentExercise.restTimerSeconds}
+              onCompleteSet={() => handleCompleteSet(currentExerciseIndex)}
+            />
+          )}
+          <p>Completed Sets: {currentExercise.completedSets}</p>
+          <p>
+            Status: {currentExercise.isFinished ? "Finished" : "In Progress"}
+          </p>
+          {!currentExercise.isFinished ? (
+            <Button onClick={() => handleFinishExercise(currentExerciseIndex)}>
+              Finish Exercise
+            </Button>
+          ) : (
+            <Button onClick={() => handleRestartExercise(currentExerciseIndex)}>
+              Restart Exercise
+            </Button>
+          )}
+
+          {currentExerciseIndex > 0 && (
+            <Button onClick={handlePreviousExercise}>Prev</Button>
+          )}
+
+          {currentExerciseIndex < lastExerciseIndex && (
+            <Button onClick={handleNextExercise}>Next</Button>
+          )}
+
           <NavigationButton to="/workout-builder">
             Back to Workout Builder
           </NavigationButton>
