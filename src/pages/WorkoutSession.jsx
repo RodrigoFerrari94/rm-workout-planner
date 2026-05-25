@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TimerToRest from "../components/TimerToRest";
 import Button from "../components/Button";
 import NavigationButton from "../components/NavigationButton";
@@ -6,16 +7,18 @@ import NavigationButton from "../components/NavigationButton";
 export default function WorkoutSession() {
   const [sessionExercises, setSessionExercises] = useState([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const navigate = useNavigate();
 
   const CURRENT_WORKOUT_STORAGE_KEY = "currentWorkout";
+  const COMPLETED_WORKOUTS_STORAGE_KEY = "completedWorkouts";
 
   const currentExercise = sessionExercises[currentExerciseIndex];
   const lastExerciseIndex = sessionExercises.length - 1;
   const totalExercises = sessionExercises.length;
 
-  const allExercisesFinished = sessionExercises.every(
-    (exercise) => exercise.isFinished === true,
-  );
+  const allExercisesFinished =
+    totalExercises > 0 &&
+    sessionExercises.every((exercise) => exercise.isFinished === true);
 
   useEffect(() => {
     const savedWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY);
@@ -119,7 +122,57 @@ export default function WorkoutSession() {
   }
 
   function handleFinishWorkout() {
-    alert("Great job! Your workout has been completed.");
+    const completedWorkout = {
+      id: Date.now(),
+      date: new Date().toLocaleDateString(),
+      exercises: sessionExercises,
+      totalExercises: totalExercises,
+    };
+
+    const savedCompletedWorkouts =
+      localStorage.getItem(COMPLETED_WORKOUTS_STORAGE_KEY) || null;
+
+    const previousCompletedWorkouts = savedCompletedWorkouts
+      ? JSON.parse(savedCompletedWorkouts)
+      : [];
+
+    const updatedCompletedWorkouts = [
+      ...previousCompletedWorkouts,
+      completedWorkout,
+    ];
+
+    localStorage.setItem(
+      COMPLETED_WORKOUTS_STORAGE_KEY,
+      JSON.stringify(updatedCompletedWorkouts),
+    );
+
+    localStorage.removeItem(CURRENT_WORKOUT_STORAGE_KEY);
+
+    alert("Great job! Your workout has been completed and saved successfully.");
+
+    navigate("/calculator");
+  }
+
+  function handleRestartWorkout() {
+    const confirmRestart = confirm(
+      "Restart the entire workout? This will reset all completed sets.",
+    );
+
+    if (confirmRestart) {
+      setSessionExercises((prevExercises) => {
+        const restartedExercises = prevExercises.map((exercise) => {
+          const restartedExercise = {
+            ...exercise,
+            completedSets: 0,
+            isFinished: false,
+          };
+          return restartedExercise;
+        });
+
+        return restartedExercises;
+      });
+      setCurrentExerciseIndex(0);
+    }
   }
 
   return (
@@ -130,9 +183,6 @@ export default function WorkoutSession() {
           <div className="container">
             <p> No workout found.</p>
             <p>Build a workout first before starting a session.</p>
-            <NavigationButton to="/workout-builder">
-              Back to Workout Builder
-            </NavigationButton>
           </div>
         ) : (
           <div className="container">
@@ -185,7 +235,7 @@ export default function WorkoutSession() {
         {allExercisesFinished && (
           <div>
             <Button onClick={handleFinishWorkout}>Finish Workout</Button>{" "}
-            <Button>Restart Workout</Button>{" "}
+            <Button onClick={handleRestartWorkout}>Restart Workout</Button>{" "}
           </div>
         )}
       </div>
