@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NavigationButton from "../components/NavigationButton";
+import Button from "../components/Button";
 
 export default function WorkoutHistory() {
   const [completedWorkouts, setCompletedWorkouts] = useState([]);
@@ -17,6 +18,17 @@ export default function WorkoutHistory() {
       setCompletedWorkouts(parsedCompletedWorkouts);
     }
   }, []);
+
+  function handleClearHistory() {
+    const confirmedClear = confirm(
+      "This will clear your workout history. Continue?",
+    );
+
+    if (confirmedClear) {
+      setCompletedWorkouts([]);
+      localStorage.removeItem(COMPLETED_WORKOUTS_STORAGE_KEY);
+    }
+  }
 
   return (
     <div>
@@ -57,6 +69,7 @@ export default function WorkoutHistory() {
               );
             })}
           </div>
+          <Button onClick={handleClearHistory}>Clear History</Button>
         </div>
       )}
     </div>
