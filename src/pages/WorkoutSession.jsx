@@ -199,6 +199,7 @@ export default function WorkoutSession() {
             <p>Rest: {currentExercise.rest}</p>
             {!currentExercise.isFinished && (
               <TimerToRest
+                key={`${currentExercise.exerciseId}-${currentExerciseIndex}`}
                 initialSeconds={currentExercise.restTimerSeconds}
                 onCompleteSet={() => handleCompleteSet(currentExerciseIndex)}
               />
