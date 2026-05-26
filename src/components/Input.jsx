@@ -1,8 +1,8 @@
-export default function Input({ label, ...props }) {
+export default function Input({ label, className = "", ...props }) {
   return (
-    <div>
-      <label>{label}</label>
-      <input {...props} />
+    <div className={`form-field ${className}`}>
+      <label className="form-field__label">{label}</label>
+      <input className="form-field__input" {...props} />
     </div>
   );
 }
