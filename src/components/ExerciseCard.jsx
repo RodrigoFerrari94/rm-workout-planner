@@ -2,7 +2,7 @@ import Button from "./Button";
 
 export function ExerciseCard({ exercise, onAddExercise }) {
   return (
-    <div className="container">
+    <div className="card">
       <h3>{exercise.exerciseName}</h3>
       <p>{exercise.muscleGroup}</p>
       <p>Estimated 1RM: {exercise.estimated1RM}kg</p>

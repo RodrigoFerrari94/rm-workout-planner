@@ -150,7 +150,7 @@ export default function WorkoutBuilder() {
             )}
             <h2>Current Workout</h2>
             {currentWorkout.map((selectedExercise, index) => (
-              <div className="container" key={index}>
+              <div className="card" key={index}>
                 <h3>{selectedExercise.exerciseName}</h3>
                 <h4>{selectedExercise.muscleGroup}</h4>
                 <p>Sets: {selectedExercise.sets}</p>

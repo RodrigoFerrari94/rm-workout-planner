@@ -185,7 +185,7 @@ export default function WorkoutSession() {
             <p>Build a workout first before starting a session.</p>
           </div>
         ) : (
-          <div className="container">
+          <div className="card">
             <p>
               Exercise {currentExerciseIndex + 1} of {totalExercises}
             </p>

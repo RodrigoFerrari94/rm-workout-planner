@@ -44,7 +44,7 @@ export default function WorkoutHistory() {
           <div className="container">
             {completedWorkouts.map((workout) => {
               return (
-                <div className="container" key={workout.id}>
+                <div className="card" key={workout.id}>
                   <h2>Workout Completed</h2>
                   <p>Date: {workout.date}</p>
                   <p>Total exercises: {workout.totalExercises}</p>
@@ -52,7 +52,7 @@ export default function WorkoutHistory() {
                   {workout.exercises.map((exerciseCompleted, index) => {
                     return (
                       <div
-                        className="container"
+                        className="card"
                         key={`${workout.id}-${exerciseCompleted.exerciseId}-${index}`}
                       >
                         <p>{exerciseCompleted.exerciseName}</p>
