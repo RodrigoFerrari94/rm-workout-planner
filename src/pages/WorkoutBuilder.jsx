@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ExerciseCard } from "../components/ExerciseCard";
 import { trainingGoals } from "../data/trainingGoals";
 import Button from "../components/Button";
+import Select from "../components/Select.jsx";
 import NavigationButton from "../components/NavigationButton";
 
 export default function WorkoutBuilder() {
@@ -113,15 +114,18 @@ export default function WorkoutBuilder() {
         </div>
       ) : (
         <div>
-          <label>Select a training goal</label>
-          <select value={goal} onChange={(e) => setGoal(e.target.value)}>
+          <Select
+            label="Select a training goal"
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+          >
             <option value="" disabled>
               Select a goal
             </option>
             <option value="strength">Strength</option>
             <option value="hypertrophy">Hypertrophy</option>
             <option value="endurance">Endurance</option>
-          </select>
+          </Select>
 
           <NavigationButton to={"/calculator"}>
             Back to Calculator

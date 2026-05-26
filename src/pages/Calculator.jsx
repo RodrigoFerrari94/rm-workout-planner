@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Select from "../components/Select.jsx";
 import NavigationButton from "../components/NavigationButton.jsx";
 import HistoryItem from "../components/HistoryItem";
 import { calculate1RM } from "../utils/calculate1RM";
@@ -77,7 +77,9 @@ export default function Calculator() {
   }
 
   function handleClearHistory() {
-    const confirmedClear = confirm("This will clear your calculation history and current workout. Continue?");
+    const confirmedClear = confirm(
+      "This will clear your calculation history and current workout. Continue?",
+    );
 
     if (confirmedClear) {
       setHistory([]);
@@ -101,9 +103,8 @@ export default function Calculator() {
     <div className="container">
       <h1>1RM Calculator</h1>
       <form onSubmit={handleCalculate}>
-        <label>Exercise</label>
-
-        <select
+        <Select
+          label="Exercise"
           value={exerciseId}
           onChange={(e) => setExerciseId(e.target.value)}
         >
@@ -116,7 +117,7 @@ export default function Calculator() {
               {exercise.name}
             </option>
           ))}
-        </select>
+        </Select>
 
         <Input
           label={"Weight"}

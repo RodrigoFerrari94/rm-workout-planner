@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import Select from "../components/Select";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -74,15 +75,18 @@ export default function Login() {
           onChange={(e) => setWeight(e.target.value)}
         />
         <div>
-          <label>Level</label>
-          <select value={level} onChange={(e) => setLevel(e.target.value)}>
+          <Select
+            label="Level"
+            value={level}
+            onChange={(e) => setLevel(e.target.value)}
+          >
             <option value="" disabled>
               Select your level
             </option>
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
             <option value="advanced">Advanced</option>
-          </select>
+          </Select>
         </div>
         <Button type="submit">Get Started</Button>
       </form>
