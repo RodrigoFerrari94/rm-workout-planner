@@ -52,7 +52,7 @@ export default function WorkoutHistory() {
                   {workout.exercises.map((exerciseCompleted, index) => {
                     return (
                       <div
-                        className="card"
+                        className="card  card--nested"
                         key={`${workout.id}-${exerciseCompleted.exerciseId}-${index}`}
                       >
                         <p>{exerciseCompleted.exerciseName}</p>

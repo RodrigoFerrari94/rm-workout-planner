@@ -107,3 +107,17 @@ a {
   padding: var(--space-md);
   margin-bottom: var(--space-md);
 }
+
+.card--nested {
+  background: var(--color-surface-light);
+  border-color: transparent;
+  margin-top: var(--space-sm);
+}
+
+.history-item {
+  text-align: left;
+}
+
+.history-item h3 {
+  margin-bottom: var(--space-xs);
+}
