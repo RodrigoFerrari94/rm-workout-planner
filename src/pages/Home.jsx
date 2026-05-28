@@ -1,17 +1,46 @@
 import NavigationButton from "../components/NavigationButton";
-import Button from "../components/Button";
 
 export default function Home() {
   return (
-    <div className="container">
-      <h1>RM Workout Planner</h1>
+    <div className="page home-page">
+      <header className="page__header home-page__hero">
+        <p className="home-page__eyebrow">RM Workout Planner</p>
 
-      <p>
-        Calculate your 1RM for each exercise and create a personalized workout
-        based on your training goals.
-      </p>
+        <h1 className="page__title">Plan. Calculate. Train. Progress.</h1>
 
-      <NavigationButton to={"/login"}>Get Started</NavigationButton>
+        <p className="page__subtitle">
+          Calculate your estimated 1RM, build goal-based workouts, and track
+          every training session.
+        </p>
+
+        <NavigationButton to="/login">Get Started</NavigationButton>
+      </header>
+
+      <main className="page__content home-page__content">
+        <div className="card home-page__feature-card">
+          <h2>Calculate your 1RM</h2>
+          <p>
+            Estimate your maximum strength based on the weight and reps you
+            already perform.
+          </p>
+        </div>
+
+        <div className="card home-page__feature-card">
+          <h2>Build smarter workouts</h2>
+          <p>
+            Generate training suggestions based on strength, hypertrophy, or
+            endurance goals.
+          </p>
+        </div>
+
+        <div className="card home-page__feature-card">
+          <h2>Track your sessions</h2>
+          <p>
+            Complete sets, control rest time, finish workouts, and review your
+            workout history.
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

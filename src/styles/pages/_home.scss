@@ -1,0 +1,27 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__hero {
+    padding-top: var(--space-12);
+  }
+
+  &__eyebrow {
+    margin-bottom: var(--space-3);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  &__content {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  &__feature-card {
+    text-align: left;
+  }
+}
