@@ -1,6 +1,6 @@
 export default function HistoryItem({ item }) {
   return (
-    <div className="card history-item">
+    <div className="card card--history-item">
       <h3>{item.exerciseName}</h3>
       <h4>{item.muscleGroup}</h4>
       <p>Weight: {item.weight}Kg</p>
