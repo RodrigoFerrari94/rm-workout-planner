@@ -1,0 +1,13 @@
+body {
+  min-height: 100vh;
+  font-family: var(--font-main);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto var(--space-4);
+  padding: var(--space-4);
+}
