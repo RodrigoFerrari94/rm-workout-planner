@@ -1,44 +1,57 @@
+import { Calculator, Dumbbell, Activity } from "lucide-react";
 import NavigationButton from "../components/NavigationButton";
 
 export default function Home() {
   return (
     <div className="page home-page">
-      <header className="page__header home-page__hero">
-        <p className="home-page__eyebrow">RM Workout Planner</p>
+      <main className="home-page__hero">
+        <div className="home-page__brand">
+          <span className="home-page__brand-mark">RM</span>
+          <span className="home-page__brand-text">Workout Planner</span>
+        </div>
 
-        <h1 className="page__title">Plan. Calculate. Train. Progress.</h1>
+        <h1 className="home-page__headline">
+          Plan.
+          <br />
+          Calculate.
+          <br />
+          Train.
+          <br />
+          <span>Progress.</span>
+        </h1>
 
-        <p className="page__subtitle">
-          Calculate your estimated 1RM, build goal-based workouts, and track
-          every training session.
+        <p className="home-page__subtitle">
+          Turn your strength data into smarter workouts.
         </p>
 
-        <NavigationButton to="/login">Get Started</NavigationButton>
-      </header>
-
-      <main className="page__content home-page__content">
-        <div className="card home-page__feature-card">
-          <h2>Calculate your 1RM</h2>
-          <p>
-            Estimate your maximum strength based on the weight and reps you
-            already perform.
-          </p>
+        <div className="home-page__actions">
+          <NavigationButton to="/login" className="home-page__cta">
+            Get Started
+          </NavigationButton>
         </div>
 
-        <div className="card home-page__feature-card">
-          <h2>Build smarter workouts</h2>
-          <p>
-            Generate training suggestions based on strength, hypertrophy, or
-            endurance goals.
-          </p>
-        </div>
+        <section className="home-page__features">
+          <div className="card home-page__feature-card">
+            <Calculator className="home-page__feature-icon" size={22} />
+            <p>Calculate your 1RM</p>
+          </div>
 
-        <div className="card home-page__feature-card">
-          <h2>Track your sessions</h2>
-          <p>
-            Complete sets, control rest time, finish workouts, and review your
-            workout history.
-          </p>
+          <div className="card home-page__feature-card">
+            <Dumbbell className="home-page__feature-icon" size={22} />
+            <p>Build your workout</p>
+          </div>
+
+          <div className="card home-page__feature-card">
+            <Activity className="home-page__feature-icon" size={22} />
+            <p>Track your progress</p>
+          </div>
+        </section>
+
+        <div className="home-page__footer">
+          <span>Already using the app?</span>
+          <NavigationButton to="/login" className="button--ghost ">
+            Login
+          </NavigationButton>
         </div>
       </main>
     </div>

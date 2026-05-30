@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -56,25 +55,32 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Start your training</h1>
-      <form onSubmit={handleUserSetup}>
-        <Input
-          label={"Name"}
-          type={"text"}
-          placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+    <div className="page login-page">
+      <header className="page__header">
+        <h1 className="page__title">Start your training</h1>
+        <p className="page__subtitle">
+          Add your basic information to personalize your workout experience.
+        </p>
+      </header>
 
-        <Input
-          label="Weight"
-          type="number"
-          placeholder="Enter your weight"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-        <div>
+      <main className="page__content">
+        <form className="card login-page__form" onSubmit={handleUserSetup}>
+          <Input
+            label="Name"
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <Input
+            label="Weight"
+            type="number"
+            placeholder="Enter your weight"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+          />
+
           <Select
             label="Level"
             value={level}
@@ -87,9 +93,10 @@ export default function Login() {
             <option value="intermediate">Intermediate</option>
             <option value="advanced">Advanced</option>
           </Select>
-        </div>
-        <Button type="submit">Get Started</Button>
-      </form>
+
+          <Button type="submit">Continue</Button>
+        </form>
+      </main>
     </div>
   );
 }

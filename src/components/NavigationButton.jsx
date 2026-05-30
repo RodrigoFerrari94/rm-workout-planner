@@ -4,5 +4,9 @@ import Button from "./Button";
 export default function NavigationButton({ children, to, ...props }) {
   const navigate = useNavigate();
 
-  return <Button onClick={() => navigate(to)}>{children}</Button>;
+  return (
+    <Button onClick={() => navigate(to)} {...props}>
+      {children}
+    </Button>
+  );
 }
