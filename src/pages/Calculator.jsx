@@ -100,66 +100,92 @@ export default function Calculator() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>1RM Calculator</h1>
-      <form onSubmit={handleCalculate}>
-        <Select
-          label="Exercise"
-          value={exerciseId}
-          onChange={(e) => setExerciseId(e.target.value)}
-        >
-          <option value="" disabled>
-            Select an exercise
-          </option>
-
-          {exercises.map((exercise) => (
-            <option key={exercise.id} value={exercise.id}>
-              {exercise.name}
-            </option>
-          ))}
-        </Select>
-
-        <Input
-          label={"Weight"}
-          type={"number"}
-          placeholder={"Enter the weight used"}
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-
-        <Input
-          label={"Reps"}
-          type={"number"}
-          placeholder={"Enter the number of reps"}
-          value={reps}
-          onChange={(e) => setReps(e.target.value)}
-        />
-
-        <Button type={"submit"}>Calculate</Button>
-      </form>
-
-      {calculation && (
-        <p>
-          Your 1RM is {calculation.estimated1RM}Kg for{" "}
-          {calculation.exerciseName}.
+    <div className="page calculator-page">
+      <header className="calculator-page__header">
+        <h1 className="calculator-page__title">Calculate 1RM</h1>
+        <p className="calculator-page__subtitle">
+          Enter the weight and repetitions you performed.
         </p>
-      )}
-      {history.length > 0 && (
-        <NavigationButton to={"/workout-builder"}>
-          Go to Workout Builder
-        </NavigationButton>
-      )}
+      </header>
 
-      {history.length > 0 && (
-        <div>
-          <h2>Historical</h2>
-          <Button onClick={handleClearHistory}>Clear History</Button>
-        </div>
-      )}
+      <main className="page__content calculator-page__content">
+        <section className="card calculator-page__input-card">
+          <form className="calculator-page__form" onSubmit={handleCalculate}>
+            <Select
+              label="Exercise"
+              value={exerciseId}
+              onChange={(e) => setExerciseId(e.target.value)}
+            >
+              <option value="" disabled>
+                Select an exercise
+              </option>
 
-      {history.map((item) => (
-        <HistoryItem key={item.id} item={item} />
-      ))}
+              {exercises.map((exercise) => (
+                <option key={exercise.id} value={exercise.id}>
+                  {exercise.name}
+                </option>
+              ))}
+            </Select>
+
+            <Input
+              label="Weight (kg)"
+              type="number"
+              placeholder="0 kg"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+            />
+
+            <Input
+              label="Repetitions"
+              type="number"
+              placeholder="0"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
+            />
+
+            <Button type="submit">Calculate 1RM</Button>
+          </form>
+        </section>
+
+        {calculation && (
+          <section className="card calculator-page__result-card">
+            <span className="calculator-page__result-label">
+              Your estimated 1RM
+            </span>
+
+            <strong className="calculator-page__result-value">
+              {calculation.estimated1RM} kg
+            </strong>
+
+            <p className="calculator-page__result-meta">
+              Based on {calculation.weight} kg x {calculation.reps} reps
+            </p>
+
+            <p className="calculator-page__formula">Formula: Epley</p>
+          </section>
+        )}
+
+        {history.length > 0 && (
+          <section className="calculator-page__history">
+            <div className="calculator-page__section-header">
+              <h2>Recent History</h2>
+              <Button onClick={handleClearHistory} className="button--danger">
+                Clear
+              </Button>
+            </div>
+
+            <div className="calculator-page__history-list">
+              {history.map((item) => (
+                <HistoryItem key={item.id} item={item} />
+              ))}
+            </div>
+
+            <NavigationButton to="/workout-builder">
+              Go to Workout Builder
+            </NavigationButton>
+          </section>
+        )}
+      </main>
     </div>
   );
 }

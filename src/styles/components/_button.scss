@@ -31,4 +31,12 @@
       color: var(--color-primary-hover);
     }
   }
+  &--danger {
+    background: var(--color-error);
+    color: var(--color-text);
+
+    &:hover {
+      background: #dc2626;
+    }
+  }
 }
