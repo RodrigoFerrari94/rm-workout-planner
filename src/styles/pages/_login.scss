@@ -1,6 +1,36 @@
-.login-page__form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
+.login-page {
+  min-height: 100vh;
+
+  &__header {
+    padding-top: var(--space-8);
+  }
+
+  &__avatar {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-6);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary);
+    color: var(--color-bg);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: var(--font-size-lg);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__note {
+    margin-top: var(--space-4);
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
 }
- 

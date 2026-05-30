@@ -56,10 +56,13 @@ export default function Login() {
 
   return (
     <div className="page login-page">
-      <header className="page__header">
-        <h1 className="page__title">Start your training</h1>
+      <header className="page__header login-page__header">
+        <div className="login-page__avatar">RM</div>
+
+        <h1 className="page__title">Set up your profile</h1>
+
         <p className="page__subtitle">
-          Add your basic information to personalize your workout experience.
+          Add your basic information to start planning smarter workouts.
         </p>
       </header>
 
@@ -96,6 +99,10 @@ export default function Login() {
 
           <Button type="submit">Continue</Button>
         </form>
+
+        <p className="login-page__note">
+          Your information is saved only on this device.
+        </p>
       </main>
     </div>
   );
