@@ -1,0 +1,84 @@
+.goal-option {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-border-strong);
+    background: var(--color-surface-soft);
+    transform: translateY(-1px);
+  }
+
+  &--selected {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    box-shadow:
+      0 0 0 1px rgba(163, 255, 18, 0.18),
+      0 0 22px rgba(163, 255, 18, 0.08);
+  }
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: var(--radius-md);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--color-surface-soft);
+
+    &--strength {
+      color: var(--color-warning);
+      background: rgba(245, 158, 11, 0.14);
+    }
+
+    &--hypertrophy {
+      color: var(--color-primary);
+      background: var(--color-primary-soft);
+    }
+
+    &--endurance {
+      color: var(--color-secondary);
+      background: var(--color-secondary-soft);
+    }
+  }
+
+  &--selected &__icon {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    strong {
+      color: var(--color-text);
+      font-size: var(--font-size-md);
+      font-weight: 800;
+    }
+
+    small {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-xs);
+      line-height: 1.4;
+    }
+  }
+}

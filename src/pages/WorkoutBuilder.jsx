@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Flame, Dumbbell, Zap } from "lucide-react";
 import { ExerciseCard } from "../components/ExerciseCard";
 import { trainingGoals } from "../data/trainingGoals";
 import Button from "../components/Button";
@@ -103,71 +104,147 @@ export default function WorkoutBuilder() {
   }
 
   return (
-    <div className="container">
-      <h1>Workout Builder</h1>
+    <div className="page workout-builder-page">
+      <header className="workout-builder-page__header">
+        <h1 className="workout-builder-page__title">Build Workout</h1>
+        <p className="workout-builder-page__subtitle">
+          Choose your goal and add calculated exercises to your workout.
+        </p>
+      </header>
 
-      {exercisesList.length === 0 ? (
-        <div className="container">
-          <p> No calculated exercises found.</p>
-          <p>Calculate your 1RM first to build a workout.</p>
-          <NavigationButton to={"/calculator"}>Calculate 1RM</NavigationButton>
-        </div>
-      ) : (
-        <div>
-          <Select
-            label="Select a training goal"
-            value={goal}
-            onChange={(e) => setGoal(e.target.value)}
-          >
-            <option value="" disabled>
-              Select a goal
-            </option>
-            <option value="strength">Strength</option>
-            <option value="hypertrophy">Hypertrophy</option>
-            <option value="endurance">Endurance</option>
-          </Select>
+      <main className="page__content workout-builder-page__content">
+        {exercisesList.length === 0 ? (
+          <section className="card workout-builder-page__empty">
+            <h2>No calculated exercises found</h2>
+            <p>Calculate your 1RM first to build a workout.</p>
 
-          <NavigationButton to={"/calculator"}>
-            Back to Calculator
-          </NavigationButton>
+            <NavigationButton to="/calculator">Calculate 1RM</NavigationButton>
+          </section>
+        ) : (
+          <>
+            <button
+              type="button"
+              className={`goal-option ${
+                goal === "strength" ? "goal-option--selected" : ""
+              }`}
+              onClick={() => setGoal("strength")}
+            >
+              <span className="goal-option__icon goal-option__icon--strength">
+                <Flame size={22} strokeWidth={2.5} />
+              </span>
 
-          <div className="container">
-            <h2>Calculated Exercises</h2>
-            {exercisesList.map((exercise) => (
-              <ExerciseCard
-                key={exercise.exerciseId}
-                exercise={exercise}
-                onAddExercise={handleAddExerciseToWorkout}
-              />
-            ))}
-          </div>
+              <span className="goal-option__content">
+                <strong>Strength</strong>
+                <small>1-5 reps · 85-95% 1RM</small>
+              </span>
+            </button>
 
-          <div className="container">
-            {currentWorkout.length > 0 && (
-              <NavigationButton to="/workout-session">
-                Start Workout
-              </NavigationButton>
-            )}
-            <h2>Current Workout</h2>
-            {currentWorkout.map((selectedExercise, index) => (
-              <div className="card" key={index}>
-                <h3>{selectedExercise.exerciseName}</h3>
-                <h4>{selectedExercise.muscleGroup}</h4>
-                <p>Sets: {selectedExercise.sets}</p>
-                <p>Reps: {selectedExercise.reps}</p>
-                <p>Rest: {selectedExercise.rest}</p>
-                <p>
-                  Load range: {selectedExercise.minLoad} kg -{" "}
-                  {selectedExercise.maxLoad} kg
-                </p>
-                <Button onClick={() => handleRemoveExerciseFromWorkout(index)}>
-                  Delete
-                </Button>
+            <button
+              type="button"
+              className={`goal-option ${
+                goal === "hypertrophy" ? "goal-option--selected" : ""
+              }`}
+              onClick={() => setGoal("hypertrophy")}
+            >
+              <span className="goal-option__icon goal-option__icon--hypertrophy">
+                <Dumbbell size={22} strokeWidth={2.5} />
+              </span>
+
+              <span className="goal-option__content">
+                <strong>Hypertrophy</strong>
+                <small>8-12 reps · 70-84% 1RM</small>
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className={`goal-option ${
+                goal === "endurance" ? "goal-option--selected" : ""
+              }`}
+              onClick={() => setGoal("endurance")}
+            >
+              <span className="goal-option__icon goal-option__icon--endurance">
+                <Zap size={22} strokeWidth={2.5} />
+              </span>
+
+              <span className="goal-option__content">
+                <strong>Endurance</strong>
+                <small>12-20 reps · 55-69% 1RM</small>
+              </span>
+            </button>
+
+            <section className="workout-builder-page__section">
+              <div className="workout-builder-page__section-header">
+                <h2>Available Exercises</h2>
+
+                <NavigationButton to="/calculator" className="button--ghost">
+                  Back to Calculator
+                </NavigationButton>
               </div>
-            ))}
-          </div>
-        </div>
-      )}
+
+              <div className="workout-builder-page__list">
+                {exercisesList.map((exercise) => (
+                  <ExerciseCard
+                    key={exercise.exerciseId}
+                    exercise={exercise}
+                    onAddExercise={handleAddExerciseToWorkout}
+                  />
+                ))}
+              </div>
+            </section>
+
+            <section className="card workout-builder-page__current">
+              <div className="workout-builder-page__section-header">
+                <h2>Current Workout ({currentWorkout.length})</h2>
+              </div>
+
+              {currentWorkout.length === 0 ? (
+                <div className="workout-builder-page__empty-current">
+                  <p>No exercises added yet.</p>
+                  <p>Select a goal and add exercises to build your workout.</p>
+                </div>
+              ) : (
+                <div className="workout-builder-page__list">
+                  {currentWorkout.map((selectedExercise, index) => (
+                    <div
+                      className="card card--nested workout-builder-page__workout-card"
+                      key={`${selectedExercise.exerciseId}-${selectedExercise.goal}-${index}`}
+                    >
+                      <h3>{selectedExercise.exerciseName}</h3>
+                      <h4>{selectedExercise.muscleGroup}</h4>
+
+                      <p>
+                        Sets: {selectedExercise.sets} · Reps:{" "}
+                        {selectedExercise.reps}
+                      </p>
+
+                      <p>Rest: {selectedExercise.rest}</p>
+
+                      <p>
+                        Load range: {selectedExercise.minLoad} kg -{" "}
+                        {selectedExercise.maxLoad} kg
+                      </p>
+
+                      <Button
+                        className="button--danger"
+                        onClick={() => handleRemoveExerciseFromWorkout(index)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {currentWorkout.length > 0 && (
+                <NavigationButton to="/workout-session">
+                  Start Workout
+                </NavigationButton>
+              )}
+            </section>
+          </>
+        )}
+      </main>
     </div>
   );
 }

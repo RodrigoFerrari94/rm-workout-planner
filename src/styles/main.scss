@@ -9,8 +9,10 @@
 @use "./pages/home";
 @use "./pages/login";
 @use "./pages/calculator";
+@use "./pages/workout--builder";
 
 @use "./components/button";
 @use "./components/form";
 @use "./components/card";
 @use "./components/navbar";
+@use "./components/goal-option";
