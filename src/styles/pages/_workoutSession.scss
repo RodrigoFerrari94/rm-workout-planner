@@ -6,200 +6,200 @@
       transparent 28%
     ),
     linear-gradient(180deg, var(--color-bg) 0%, #02040a 100%);
-}
 
-.workout-session-page__header {
-  max-width: var(--container-narrow);
-  margin: 0 auto var(--space-5);
-  padding-top: var(--space-4);
-}
-
-.workout-session-page__title {
-  margin: 0 0 var(--space-1);
-  color: var(--color-text);
-  font-size: var(--font-size-2xl);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.workout-session-page__subtitle {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-}
-
-.workout-session-page__content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
-}
-
-.workout-session-page__exercise-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.workout-session-page__exercise-header {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-4);
-  align-items: flex-start;
-
-  h2 {
-    margin: 0 0 var(--space-1);
-    font-size: var(--font-size-xl);
-    font-weight: 900;
+  &__header {
+    max-width: var(--container-narrow);
+    margin: 0 auto var(--space-5);
+    padding-top: var(--space-4);
   }
 
-  p {
+  &__title {
+    margin: 0 0 var(--space-1);
+    color: var(--color-text);
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  &__subtitle {
     margin: 0;
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
   }
-}
 
-.workout-session-page__status {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-  font-size: var(--font-size-xs);
-  font-weight: 800;
-  white-space: nowrap;
-}
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
 
-.workout-session-page__progress {
-  width: 100%;
-  height: 8px;
-  overflow: hidden;
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-soft);
-}
+  &__exercise-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
 
-.workout-session-page__progress-fill {
-  height: 100%;
-  border-radius: inherit;
-  background: var(--color-primary);
-  transition: width 0.2s ease;
-}
+  &__exercise-header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    align-items: flex-start;
 
-.workout-session-page__metrics {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-}
+    h2 {
+      margin: 0 0 var(--space-1);
+      font-size: var(--font-size-xl);
+      font-weight: 900;
+    }
 
-.workout-session-page__metric-card {
-  background: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-  text-align: center;
-}
+    p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+  }
 
-.workout-session-page__metric-label {
-  display: block;
-  margin-bottom: var(--space-2);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-}
+  &__status {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    white-space: nowrap;
+  }
 
-.workout-session-page__metric-value {
-  color: var(--color-text);
-  font-size: var(--font-size-lg);
-  font-weight: 900;
-}
+  &__progress {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-soft);
+  }
 
-.workout-session-page__sets-card {
-  text-align: center;
-}
+  &__progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-primary);
+    transition: width 0.2s ease;
+  }
 
-.workout-session-page__sets-count {
-  width: 96px;
-  height: 96px;
-  margin: var(--space-3) auto;
-  border-radius: var(--radius-pill);
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    &-card {
+      background: var(--color-surface-elevated);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+    }
 
-  background: var(--color-surface-elevated);
-  border: 2px solid var(--color-border);
+    &-label {
+      display: block;
+      margin-bottom: var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
 
-  color: var(--color-text);
-  font-size: var(--font-size-3xl);
-  font-weight: 900;
-  line-height: 1;
-}
+    &-value {
+      color: var(--color-text);
+      font-size: var(--font-size-lg);
+      font-weight: 900;
+    }
+  }
 
-.workout-session-page__sets-count--success {
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  &__sets-card {
+    text-align: center;
+  }
 
-  box-shadow: 0 0 24px rgba(163, 255, 18, 0.14);
-}
+  &__sets-count {
+    width: 96px;
+    height: 96px;
+    margin: var(--space-3) auto;
+    border-radius: var(--radius-pill);
 
-.workout-session-page__sets-count--danger {
-  color: var(--color-error);
-  border-color: var(--color-error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  box-shadow: 0 0 24px rgba(239, 68, 68, 0.12);
-}
+    background: var(--color-surface-elevated);
+    border: 2px solid var(--color-border);
 
-.workout-session-page__sets-feedback {
-  margin-bottom: 0;
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-}
+    color: var(--color-text);
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    line-height: 1;
 
-.workout-session-page__timer-card {
-  text-align: center;
-}
+    &--success {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
 
-.workout-session-page__actions,
-.workout-session-page__finish-actions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
+      box-shadow: 0 0 24px rgba(163, 255, 18, 0.14);
+    }
 
-.workout-session-page__navigation {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
-}
+    &--danger {
+      color: var(--color-error);
+      border-color: var(--color-error);
 
-.workout-session-page__nav-slot {
-  display: flex;
-}
+      box-shadow: 0 0 24px rgba(239, 68, 68, 0.12);
+    }
+  }
 
-.workout-session-page__nav-slot--right {
-  justify-content: flex-end;
-}
+  &__sets-feedback {
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+  }
 
-.workout-session-page__nav-slot .button {
-  width: 100%;
-}
+  &__timer-card {
+    text-align: center;
+  }
 
-.workout-session-page__status {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-xs);
-  font-weight: 800;
-  white-space: nowrap;
-}
+  &__actions,
+  &__finish-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
 
-.workout-session-page__status--active {
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
-}
+  &__navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
 
-.workout-session-page__status--finished {
-  background: rgba(239, 68, 68, 0.14);
-  color: var(--color-error);
+  &__nav-slot {
+    display: flex;
+
+    &--right {
+      justify-content: flex-end;
+    }
+
+    .button {
+      width: 100%;
+    }
+  }
+
+  &__status {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    white-space: nowrap;
+
+    &--active {
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+    }
+
+    &--finished {
+      background: rgba(239, 68, 68, 0.14);
+      color: var(--color-error);
+    }
+  }
 }

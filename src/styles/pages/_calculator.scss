@@ -6,101 +6,105 @@
       transparent 28%
     ),
     linear-gradient(180deg, var(--color-bg) 0%, #02040a 100%);
-}
 
-.calculator-page__title {
-  margin: 0 0 var(--space-2);
-  color: var(--color-text);
-  font-size: var(--font-size-2xl);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.calculator-page__subtitle {
-  max-width: 300px;
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-}
-.calculator-page__content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
-}
-
-.calculator-page__input-card {
-  background: var(--color-surface-elevated);
-}
-
-.calculator-page__form {
-  display: flex;
-  flex-direction: column;
-}
-
-.calculator-page__result-card {
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(163, 255, 18, 0.2),
-      transparent 34%
-    ),
-    linear-gradient(180deg, var(--color-surface-elevated), var(--color-surface));
-  border-color: rgba(163, 255, 18, 0.25);
-}
-
-.calculator-page__result-label {
-  display: block;
-  margin-bottom: var(--space-2);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-}
-
-.calculator-page__result-value {
-  display: block;
-  margin-bottom: var(--space-3);
-  color: var(--color-primary);
-  font-size: var(--font-size-3xl);
-  font-weight: 900;
-  line-height: 1;
-}
-
-.calculator-page__result-meta {
-  margin-bottom: var(--space-2);
-  color: var(--color-text);
-  font-size: var(--font-size-sm);
-}
-
-.calculator-page__formula {
-  margin-bottom: 0;
-  color: var(--color-text-subtle);
-  font-size: var(--font-size-xs);
-}
-
-.calculator-page__history {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.calculator-page__section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-
-  h2 {
-    margin-bottom: 0;
+  &__title {
+    margin: 0 0 var(--space-2);
+    color: var(--color-text);
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
   }
-}
 
-.calculator-page__history-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  &__subtitle {
+    max-width: 300px;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  &__input-card {
+    background: var(--color-surface-elevated);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__result-card {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(163, 255, 18, 0.2),
+        transparent 34%
+      ),
+      linear-gradient(
+        180deg,
+        var(--color-surface-elevated),
+        var(--color-surface)
+      );
+    border-color: rgba(163, 255, 18, 0.25);
+  }
+
+  &__result-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+  }
+
+  &__result-value {
+    display: block;
+    margin-bottom: var(--space-3);
+    color: var(--color-primary);
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  &__result-meta {
+    margin-bottom: var(--space-2);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+  }
+
+  &__formula {
+    margin-bottom: 0;
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-xs);
+  }
+
+  &__history {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+
+  &__history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
 }
