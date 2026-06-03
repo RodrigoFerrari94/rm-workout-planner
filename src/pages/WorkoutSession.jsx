@@ -20,6 +20,45 @@ export default function WorkoutSession() {
     totalExercises > 0 &&
     sessionExercises.every((exercise) => exercise.isFinished === true);
 
+  const setsRange = currentExercise
+    ? currentExercise.sets.split("-").map(Number)
+    : [0, 0];
+
+  const minSuggestedSets = setsRange[0];
+  const maxSuggestedSets = setsRange[1] ?? setsRange[0];
+
+  const isSetsBelowRange =
+    currentExercise &&
+    currentExercise.completedSets > 0 &&
+    currentExercise.completedSets < minSuggestedSets;
+
+  const isSetsAboveRange =
+    currentExercise && currentExercise.completedSets > maxSuggestedSets;
+
+  const isSetsWithinRange =
+    currentExercise &&
+    currentExercise.completedSets >= minSuggestedSets &&
+    currentExercise.completedSets <= maxSuggestedSets;
+
+  const setsStatusClass = isSetsWithinRange
+    ? "workout-session-page__sets-count--success"
+    : isSetsBelowRange || isSetsAboveRange
+      ? "workout-session-page__sets-count--danger"
+      : "";
+
+  const setsFeedbackText = isSetsWithinRange
+    ? "Within suggested range"
+    : isSetsBelowRange
+      ? "Below suggested range"
+      : isSetsAboveRange
+        ? "Above suggested range"
+        : "Not started yet";
+
+  const workoutProgress =
+    totalExercises > 0
+      ? ((currentExerciseIndex + 1) / totalExercises) * 100
+      : 0;
+
   useEffect(() => {
     const savedWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY);
 
@@ -176,74 +215,182 @@ export default function WorkoutSession() {
   }
 
   return (
-    <div>
-      <div className="container">
-        <h1>Workout Session</h1>
+    <div className="page workout-session-page">
+      <header className="workout-session-page__header">
+        <h1 className="workout-session-page__title">Workout Session</h1>
+
+        {sessionExercises.length > 0 && (
+          <p className="workout-session-page__subtitle">
+            Exercise {currentExerciseIndex + 1} of {totalExercises}
+          </p>
+        )}
+      </header>
+
+      <main className="page__content workout-session-page__content">
         {sessionExercises.length === 0 ? (
-          <div className="container">
-            <p> No workout found.</p>
+          <section className="card workout-session-page__empty">
+            <h2>No workout found</h2>
             <p>Build a workout first before starting a session.</p>
-          </div>
+
+            <NavigationButton to="/workout-builder">
+              Back to Workout Builder
+            </NavigationButton>
+          </section>
         ) : (
-          <div className="card">
-            <p>
-              Exercise {currentExerciseIndex + 1} of {totalExercises}
-            </p>
-            <h3>{currentExercise.exerciseName}</h3>
-            <p>
-              Load range: {currentExercise.minLoad} kg -{" "}
-              {currentExercise.maxLoad} kg
-            </p>
-            <p>Suggested Sets: {currentExercise.sets}</p>
-            <p>Reps: {currentExercise.reps}</p>
-            <p>Rest: {currentExercise.rest}</p>
+          <>
+            <section className="card workout-session-page__exercise-card">
+              <div className="workout-session-page__exercise-header">
+                <div>
+                  <h2>{currentExercise.exerciseName}</h2>
+                  <p>{currentExercise.muscleGroup}</p>
+                </div>
+
+                <span
+                  className={`workout-session-page__status ${
+                    currentExercise.isFinished
+                      ? "workout-session-page__status--finished"
+                      : "workout-session-page__status--active"
+                  }`}
+                >
+                  {currentExercise.isFinished ? "Finished" : "In Progress"}
+                </span>
+              </div>
+
+              <div className="workout-session-page__progress">
+                <div
+                  className="workout-session-page__progress-fill"
+                  style={{ width: `${workoutProgress}%` }}
+                />
+              </div>
+
+              <div className="workout-session-page__metrics">
+                <div className="workout-session-page__metric-card">
+                  <span className="workout-session-page__metric-label">
+                    Load range
+                  </span>
+                  <strong className="workout-session-page__metric-value">
+                    {currentExercise.minLoad} - {currentExercise.maxLoad} kg
+                  </strong>
+                </div>
+
+                <div className="workout-session-page__metric-card">
+                  <span className="workout-session-page__metric-label">
+                    Reps
+                  </span>
+                  <strong className="workout-session-page__metric-value">
+                    {currentExercise.reps}
+                  </strong>
+                </div>
+
+                <div className="workout-session-page__metric-card">
+                  <span className="workout-session-page__metric-label">
+                    Suggested sets
+                  </span>
+                  <strong className="workout-session-page__metric-value">
+                    {currentExercise.sets}
+                  </strong>
+                </div>
+
+                <div className="workout-session-page__metric-card">
+                  <span className="workout-session-page__metric-label">
+                    Suggested Rest
+                  </span>
+                  <strong className="workout-session-page__metric-value">
+                    {currentExercise.rest}
+                  </strong>
+                </div>
+              </div>
+            </section>
+
+            <section className="card workout-session-page__sets-card">
+              <span className="workout-session-page__metric-label">
+                Sets completed
+              </span>
+
+              <strong
+                className={`workout-session-page__sets-count ${setsStatusClass}`}
+              >
+                {currentExercise.completedSets}
+              </strong>
+
+              <p>Suggested range: {currentExercise.sets} sets</p>
+
+              <p className="workout-session-page__sets-feedback">
+                {setsFeedbackText}
+              </p>
+            </section>
+
             {!currentExercise.isFinished && (
-              <TimerToRest
-                key={`${currentExercise.exerciseId}-${currentExerciseIndex}`}
-                initialSeconds={currentExercise.restTimerSeconds}
-                onCompleteSet={() => handleCompleteSet(currentExerciseIndex)}
-              />
-            )}
-            <p>Completed Sets: {currentExercise.completedSets}</p>
-            <p>
-              Status: {currentExercise.isFinished ? "Finished" : "In Progress"}
-            </p>
-            {!currentExercise.isFinished ? (
-              <Button
-                onClick={() => handleFinishExercise(currentExerciseIndex)}
-              >
-                Finish Exercise
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleRestartExercise(currentExerciseIndex)}
-              >
-                Restart Exercise
-              </Button>
+              <section className="card workout-session-page__timer-card">
+                <TimerToRest
+                  key={`${currentExercise.exerciseId}-${currentExerciseIndex}`}
+                  initialSeconds={currentExercise.restTimerSeconds}
+                  onCompleteSet={() => handleCompleteSet(currentExerciseIndex)}
+                />
+              </section>
             )}
 
-            <div>
-              {" "}
-              {currentExerciseIndex > 0 && (
-                <Button onClick={handlePreviousExercise}>Prev</Button>
-              )}{" "}
-              {currentExerciseIndex < lastExerciseIndex && (
-                <Button onClick={handleNextExercise}>Next</Button>
+            <section className="workout-session-page__actions">
+              {!currentExercise.isFinished ? (
+                <Button
+                  className="button--outline"
+                  onClick={() => handleFinishExercise(currentExerciseIndex)}
+                >
+                  Finish Exercise
+                </Button>
+              ) : (
+                <Button
+                  className="button--outline"
+                  onClick={() => handleRestartExercise(currentExerciseIndex)}
+                >
+                  Restart Exercise
+                </Button>
               )}
-            </div>
-          </div>
-        )}
-        {allExercisesFinished && (
-          <div>
-            <Button onClick={handleFinishWorkout}>Finish Workout</Button>{" "}
-            <Button onClick={handleRestartWorkout}>Restart Workout</Button>{" "}
-          </div>
-        )}
-      </div>
 
-      <NavigationButton to="/workout-builder">
-        Back to Workout Builder
-      </NavigationButton>
+              <div className="workout-session-page__navigation">
+                <div className="workout-session-page__nav-slot">
+                  {currentExerciseIndex > 0 && (
+                    <Button
+                      className="button--outline"
+                      onClick={handlePreviousExercise}
+                    >
+                      Prev
+                    </Button>
+                  )}
+                </div>
+
+                <div className="workout-session-page__nav-slot workout-session-page__nav-slot--right">
+                  {currentExerciseIndex < lastExerciseIndex && (
+                    <Button
+                      className="button--outline"
+                      onClick={handleNextExercise}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {allExercisesFinished && (
+              <section className="workout-session-page__finish-actions">
+                <Button onClick={handleFinishWorkout}>Finish Workout</Button>
+
+                <Button
+                  className="button--outline"
+                  onClick={handleRestartWorkout}
+                >
+                  Restart Workout
+                </Button>
+              </section>
+            )}
+
+            <NavigationButton to="/workout-builder" className="button--ghost">
+              Back to Workout Builder
+            </NavigationButton>
+          </>
+        )}
+      </main>
     </div>
   );
 }

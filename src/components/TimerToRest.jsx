@@ -8,6 +8,14 @@ export default function TimerToRest({
   const [restTimer, setRestTimer] = useState(initialSeconds);
   const [isRunning, setIsRunning] = useState(false);
 
+  const minutes = Math.floor(restTimer / 60);
+  const seconds = restTimer % 60;
+  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+    seconds,
+  ).padStart(2, "0")}`;
+  const timerProgress =
+    initialSeconds > 0 ? (restTimer / initialSeconds) * 100 : 0;
+
   useEffect(() => {
     if (!isRunning) return;
 
@@ -26,34 +34,45 @@ export default function TimerToRest({
   }, [isRunning, restTimer, initialSeconds]);
 
   return (
-    <div className="container">
-      <p>Rest time: {restTimer}s</p>
+    <div className="timer-rest">
+      <span className="timer-rest__label">
+        {isRunning ? "Rest time" : "Ready for next set"}
+      </span>
+
+      <div
+        className="timer-rest__circle"
+        style={{ "--timer-progress": `${timerProgress}%` }}
+      >
+        <strong className="timer-rest__value">{formattedTime}</strong>
+      </div>
+
+      <p className="timer-rest__status">
+        {isRunning
+          ? "Recover and prepare for the next set."
+          : "Complete a set to start the rest timer."}
+      </p>
 
       {!isRunning && (
-        <div>
-          <Button
-            onClick={() => {
-              onCompleteSet();
-              setIsRunning(true);
-            }}
-          >
-            Complete Set
-          </Button>
-          <p>LET'S GO!!!</p>
-        </div>
+        <Button
+          onClick={() => {
+            onCompleteSet();
+            setIsRunning(true);
+          }}
+        >
+          Complete Set
+        </Button>
       )}
+
       {isRunning && (
-        <div>
-          <Button
-            onClick={() => {
-              setIsRunning(false);
-              setRestTimer(initialSeconds);
-            }}
-          >
-            Skip Rest
-          </Button>
-          <p>Resting...</p>
-        </div>
+        <Button
+          className="button--secondary"
+          onClick={() => {
+            setIsRunning(false);
+            setRestTimer(initialSeconds);
+          }}
+        >
+          Skip Rest
+        </Button>
       )}
     </div>
   );
