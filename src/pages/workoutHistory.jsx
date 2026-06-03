@@ -29,49 +29,90 @@ export default function WorkoutHistory() {
       localStorage.removeItem(COMPLETED_WORKOUTS_STORAGE_KEY);
     }
   }
-
   return (
-    <div>
-      <h1>Workout History</h1>
-      {completedWorkouts.length === 0 ? (
-        <div>
-          <p>No completed workouts yet.</p>
-          <p>Finish a workout session to see it here.</p>
-          <NavigationButton to="/calculator">Go to Calculator</NavigationButton>
-        </div>
-      ) : (
-        <div>
-          <div className="container">
-            {completedWorkouts.map((workout) => {
-              return (
-                <div className="card" key={workout.id}>
-                  <h2>Workout Completed</h2>
-                  <p>Date: {workout.date}</p>
-                  <p>Total exercises: {workout.totalExercises}</p>
-                  <h3>Exercises</h3>
-                  {workout.exercises.map((exerciseCompleted, index) => {
-                    return (
-                      <div
-                        className="card  card--nested"
-                        key={`${workout.id}-${exerciseCompleted.exerciseId}-${index}`}
-                      >
-                        <p>{exerciseCompleted.exerciseName}</p>
-                        <p>Goal: {exerciseCompleted.goal}</p>
-                        <p>Completed Sets: {exerciseCompleted.completedSets}</p>
-                        <p>
-                          Load range: {exerciseCompleted.minLoad}Kg -{" "}
-                          {exerciseCompleted.maxLoad}Kg
-                        </p>
+    <div className="page workout-history-page">
+      <header className="workout-history-page__header">
+        <h1 className="workout-history-page__title">Workout History</h1>
+        <p className="workout-history-page__subtitle">
+          Review your completed workout sessions and track your training
+          progress.
+        </p>
+      </header>
+
+      <main className="page__content workout-history-page__content">
+        {completedWorkouts.length === 0 ? (
+          <section className="card workout-history-page__empty">
+            <h2>No completed workouts yet</h2>
+            <p>Finish a workout session to see it here.</p>
+
+            <NavigationButton to="/calculator">
+              Go to Calculator
+            </NavigationButton>
+          </section>
+        ) : (
+          <>
+            <section className="workout-history-page__section-header">
+              <div>
+                <h2>Completed Workouts</h2>
+                <p>{completedWorkouts.length} workout session(s)</p>
+              </div>
+
+              <Button className="button--danger" onClick={handleClearHistory}>
+                Clear History
+              </Button>
+            </section>
+
+            <section className="workout-history-page__list">
+              {completedWorkouts.map((workout) => {
+                return (
+                  <article
+                    className="card workout-history-page__workout-card"
+                    key={workout.id}
+                  >
+                    <div className="workout-history-page__workout-header">
+                      <div>
+                        <h2>Workout Completed</h2>
+                        <p>{workout.date}</p>
                       </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-          <Button onClick={handleClearHistory}>Clear History</Button>
-        </div>
-      )}
+
+                      <span className="workout-history-page__badge">
+                        {workout.totalExercises} exercises
+                      </span>
+                    </div>
+
+                    <div className="workout-history-page__exercise-list">
+                      {workout.exercises.map((exerciseCompleted, index) => {
+                        return (
+                          <div
+                            className="card card--nested workout-history-page__exercise-card"
+                            key={`${workout.id}-${exerciseCompleted.exerciseId}-${index}`}
+                          >
+                            <div>
+                              <h3>{exerciseCompleted.exerciseName}</h3>
+                              <p>{exerciseCompleted.goal}</p>
+                            </div>
+
+                            <div className="workout-history-page__exercise-details">
+                              <span>
+                                {exerciseCompleted.completedSets} sets
+                              </span>
+
+                              <span>
+                                {exerciseCompleted.minLoad}kg -{" "}
+                                {exerciseCompleted.maxLoad}kg
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </article>
+                );
+              })}
+            </section>
+          </>
+        )}
+      </main>
     </div>
   );
 }
