@@ -25,4 +25,13 @@ export const trainingGoals = {
     maxPercentage: 0.69,
     minPercentage: 0.55,
   },
+
+  adaptation: {
+    sets: "2-3",
+    reps: "12-15",
+    rest: "60-90s",
+    restTimerSeconds: 60,
+    minPercentage: 0.45,
+    maxPercentage: 0.55,
+  },
 };

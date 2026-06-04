@@ -58,6 +58,26 @@
       font-size: var(--font-size-sm);
     }
   }
+  &__exercise-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__goal-badge {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-secondary-soft);
+    color: var(--color-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    text-transform: capitalize;
+  }
 
   &__status {
     padding: var(--space-1) var(--space-3);
@@ -88,32 +108,33 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-3);
+  }
 
-    &-card {
-      background: var(--color-surface-elevated);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4);
-      text-align: center;
-    }
+  &__metric-card {
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    text-align: center;
+  }
 
-    &-label {
-      display: block;
-      margin-bottom: var(--space-2);
-      color: var(--color-text-muted);
-      font-size: var(--font-size-xs);
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+  &__metric-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
 
-    &-value {
-      color: var(--color-text);
-      font-size: var(--font-size-lg);
-      font-weight: 900;
-    }
+  &__metric-value {
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: 900;
   }
 
   &__sets-card {
+    margin-top: var(--space-3);
     text-align: center;
   }
 

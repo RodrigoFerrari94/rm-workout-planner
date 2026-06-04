@@ -241,7 +241,14 @@ export default function WorkoutSession() {
             <section className="card workout-session-page__exercise-card">
               <div className="workout-session-page__exercise-header">
                 <div>
-                  <h2>{currentExercise.exerciseName}</h2>
+                  <div className="workout-session-page__exercise-title-row">
+                    <h2>{currentExercise.exerciseName}</h2>
+
+                    <span className="workout-session-page__goal-badge">
+                      {currentExercise.goal}
+                    </span>
+                  </div>
+
                   <p>{currentExercise.muscleGroup}</p>
                 </div>
 
@@ -302,31 +309,42 @@ export default function WorkoutSession() {
               </div>
             </section>
 
-            <section className="card workout-session-page__sets-card">
-              <span className="workout-session-page__metric-label">
-                Sets completed
-              </span>
-
-              <strong
-                className={`workout-session-page__sets-count ${setsStatusClass}`}
-              >
-                {currentExercise.completedSets}
-              </strong>
-
-              <p>Suggested range: {currentExercise.sets} sets</p>
-
-              <p className="workout-session-page__sets-feedback">
-                {setsFeedbackText}
-              </p>
-            </section>
-
-            {!currentExercise.isFinished && (
+            {!currentExercise.isFinished ? (
               <section className="card workout-session-page__timer-card">
                 <TimerToRest
                   key={`${currentExercise.exerciseId}-${currentExerciseIndex}`}
                   initialSeconds={currentExercise.restTimerSeconds}
                   onCompleteSet={() => handleCompleteSet(currentExerciseIndex)}
                 />
+                <section className="card workout-session-page__sets-card">
+                  <span className="workout-session-page__metric-label">
+                    Sets completed
+                  </span>
+
+                  <strong
+                    className={`workout-session-page__sets-count ${setsStatusClass}`}
+                  >
+                    {currentExercise.completedSets}
+                  </strong>
+
+                  <p>Suggested range: {currentExercise.sets} sets</p>
+
+                  <p className="workout-session-page__sets-feedback">
+                    {setsFeedbackText}
+                  </p>
+                </section>
+              </section>
+            ) : (
+              <section className="card workout-session-page__sets-card">
+                <span className="workout-session-page__metric-label">
+                  Sets completed
+                </span>
+
+                <strong
+                  className={`workout-session-page__sets-count ${setsStatusClass}`}
+                >
+                  {currentExercise.completedSets}
+                </strong>
               </section>
             )}
 

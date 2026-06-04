@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Flame, Dumbbell, Zap } from "lucide-react";
+import { Flame, Dumbbell, Zap, ShieldCheck } from "lucide-react";
 import { ExerciseCard } from "../components/ExerciseCard";
 import { trainingGoals } from "../data/trainingGoals";
 import Button from "../components/Button";
@@ -95,6 +95,12 @@ export default function WorkoutBuilder() {
     };
 
     setCurrentWorkout((prevWorkout) => [...prevWorkout, workoutExercise]);
+
+    const formattedGoal = goal.charAt(0).toUpperCase() + goal.slice(1);
+
+    alert(
+      `${exercise.exerciseName} was added to the workout as ${formattedGoal}.`,
+    );
   }
 
   function handleRemoveExerciseFromWorkout(indexToRemove) {
@@ -108,7 +114,8 @@ export default function WorkoutBuilder() {
       <header className="workout-builder-page__header">
         <h1 className="workout-builder-page__title">Build Workout</h1>
         <p className="workout-builder-page__subtitle">
-          Choose your goal and add calculated exercises to your workout.
+          Select a goal, then add exercises. You can change the goal between
+          exercises.
         </p>
       </header>
 
@@ -122,56 +129,81 @@ export default function WorkoutBuilder() {
           </section>
         ) : (
           <>
-            <button
-              type="button"
-              className={`goal-option ${
-                goal === "strength" ? "goal-option--selected" : ""
-              }`}
-              onClick={() => setGoal("strength")}
-            >
-              <span className="goal-option__icon goal-option__icon--strength">
-                <Flame size={22} strokeWidth={2.5} />
-              </span>
+            <section className="card workout-builder-page__goal-card">
+              <div className="workout-builder-page__goal-header">
+                <h2>Goal for next exercises</h2>
+              </div>
 
-              <span className="goal-option__content">
-                <strong>Strength</strong>
-                <small>1-5 reps · 85-95% 1RM</small>
-              </span>
-            </button>
+              <div className="workout-builder-page__goal-options">
+                <button
+                  type="button"
+                  className={`goal-option ${
+                    goal === "adaptation" ? "goal-option--selected" : ""
+                  }`}
+                  onClick={() => setGoal("adaptation")}
+                >
+                  <span className="goal-option__icon goal-option__icon--adaptation">
+                    <ShieldCheck size={22} strokeWidth={2.5} />
+                  </span>
 
-            <button
-              type="button"
-              className={`goal-option ${
-                goal === "hypertrophy" ? "goal-option--selected" : ""
-              }`}
-              onClick={() => setGoal("hypertrophy")}
-            >
-              <span className="goal-option__icon goal-option__icon--hypertrophy">
-                <Dumbbell size={22} strokeWidth={2.5} />
-              </span>
+                  <span className="goal-option__content">
+                    <strong>Adaptation</strong>
+                    <small>12-15 reps · 50% 1RM</small>
+                  </span>
+                </button>
 
-              <span className="goal-option__content">
-                <strong>Hypertrophy</strong>
-                <small>8-12 reps · 70-84% 1RM</small>
-              </span>
-            </button>
+                <button
+                  type="button"
+                  className={`goal-option ${
+                    goal === "strength" ? "goal-option--selected" : ""
+                  }`}
+                  onClick={() => setGoal("strength")}
+                >
+                  <span className="goal-option__icon goal-option__icon--strength">
+                    <Flame size={22} strokeWidth={2.5} />
+                  </span>
 
-            <button
-              type="button"
-              className={`goal-option ${
-                goal === "endurance" ? "goal-option--selected" : ""
-              }`}
-              onClick={() => setGoal("endurance")}
-            >
-              <span className="goal-option__icon goal-option__icon--endurance">
-                <Zap size={22} strokeWidth={2.5} />
-              </span>
+                  <span className="goal-option__content">
+                    <strong>Strength</strong>
+                    <small>1-5 reps · 85-95% 1RM</small>
+                  </span>
+                </button>
 
-              <span className="goal-option__content">
-                <strong>Endurance</strong>
-                <small>12-20 reps · 55-69% 1RM</small>
-              </span>
-            </button>
+                <button
+                  type="button"
+                  className={`goal-option ${
+                    goal === "hypertrophy" ? "goal-option--selected" : ""
+                  }`}
+                  onClick={() => setGoal("hypertrophy")}
+                >
+                  <span className="goal-option__icon goal-option__icon--hypertrophy">
+                    <Dumbbell size={22} strokeWidth={2.5} />
+                  </span>
+
+                  <span className="goal-option__content">
+                    <strong>Hypertrophy</strong>
+                    <small>8-12 reps · 70-84% 1RM</small>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`goal-option ${
+                    goal === "endurance" ? "goal-option--selected" : ""
+                  }`}
+                  onClick={() => setGoal("endurance")}
+                >
+                  <span className="goal-option__icon goal-option__icon--endurance">
+                    <Zap size={22} strokeWidth={2.5} />
+                  </span>
+
+                  <span className="goal-option__content">
+                    <strong>Endurance</strong>
+                    <small>12-20 reps · 55-69% 1RM</small>
+                  </span>
+                </button>
+              </div>
+            </section>
 
             <section className="workout-builder-page__section">
               <div className="workout-builder-page__section-header">
@@ -210,7 +242,12 @@ export default function WorkoutBuilder() {
                       className="card card--nested workout-builder-page__workout-card"
                       key={`${selectedExercise.exerciseId}-${selectedExercise.goal}-${index}`}
                     >
-                      <h3>{selectedExercise.exerciseName}</h3>
+                      <h3>
+                        {selectedExercise.exerciseName}{" "}
+                        <span className="workout-builder-page__goal-badge">
+                          {selectedExercise.goal}
+                        </span>
+                      </h3>
                       <h4>{selectedExercise.muscleGroup}</h4>
 
                       <p>

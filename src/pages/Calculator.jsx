@@ -64,7 +64,7 @@ export default function Calculator() {
     };
 
     setHistory((prev) => {
-      const updatedHistory = [...prev, newHistoryItem].slice(-HISTORY_LIMIT);
+      const updatedHistory = [newHistoryItem, ...prev].slice(0, HISTORY_LIMIT);
 
       localStorage.setItem("history", JSON.stringify(updatedHistory));
 

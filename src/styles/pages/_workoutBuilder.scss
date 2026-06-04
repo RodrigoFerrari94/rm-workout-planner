@@ -36,17 +36,48 @@
     gap: var(--space-5);
   }
 
+  &__goal-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+
+    background: var(--color-secondary-soft);
+    color: var(--color-secondary);
+
+    font-size: var(--font-size-xs);
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+
   &__goal-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-4);
     background: var(--color-surface-elevated);
+  }
+
+  &__goal-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
 
     h2 {
       margin: 0;
       color: var(--color-text);
       font-size: var(--font-size-lg);
-      font-weight: 800;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      margin: 0;
+      max-width: 320px;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+      line-height: 1.5;
     }
   }
 
@@ -55,7 +86,6 @@
     flex-direction: column;
     gap: var(--space-3);
   }
-
   &__section {
     display: flex;
     flex-direction: column;
