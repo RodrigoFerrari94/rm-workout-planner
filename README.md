@@ -32,7 +32,7 @@ The app allows the user to:
 
 ## Live Demo
 
-Deployment link will be added soon.
+[View project online](https://rm-workout-planner.vercel.app/calculator)
 
 ---
 
