@@ -60,7 +60,7 @@ export default function Calculator() {
       weight: weight,
       reps: reps,
       estimated1RM: estimated1RM,
-      date: new Date().toLocaleDateString(),
+      createdAt: Date.now(),
     };
 
     setHistory((prev) => {
