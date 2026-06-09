@@ -6,7 +6,7 @@ export default function HistoryItem({ item }) {
       <p>Weight: {item.weight}Kg</p>
       <p>Reps: {item.reps}</p>
       <p>1 RM: {item.estimated1RM}Kg</p>
-      <p>Date: {item.date}</p>
+      <p>Date: {new Date(item.createdAt).toLocaleDateString()}</p>
     </div>
   );
 }

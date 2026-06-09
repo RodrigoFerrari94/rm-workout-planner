@@ -21,19 +21,19 @@ export default function WorkoutBuilder() {
       const parsedHistory = JSON.parse(savedHistory);
 
       // Keep only the latest 1RM calculation for each exercise
-      const latestExercises = [];
-
-      parsedHistory.forEach((item) => {
-        const existingIndex = latestExercises.findIndex(
+      const latestExercises = parsedHistory.reduce((acc, item) => {
+        const existingIndex = acc.findIndex(
           (exercise) => exercise.exerciseId === item.exerciseId,
         );
 
         if (existingIndex === -1) {
-          latestExercises.push(item);
-        } else {
-          latestExercises[existingIndex] = item;
+          acc.push(item);
+        } else if (item.createdAt > acc[existingIndex].createdAt) {
+          acc[existingIndex] = item;
         }
-      });
+
+        return acc;
+      }, []);
 
       setExercisesList(latestExercises);
     }
